@@ -13,6 +13,11 @@ use Doctrine\ORM\EntityManager;
 class DoctrineRepository implements RepositoryInterface
 {
     /**
+     * @var string
+     */
+    protected $entity;
+
+    /**
      * @var \Doctrine\ORM\EntityManager
      */
     protected $manager;
@@ -35,6 +40,14 @@ class DoctrineRepository implements RepositoryInterface
      */
     public function create($data)
     {
+        $entity = new $this->entity;
+
+        $entity->create($data);
+
+        $this->manager->persist($entity);
+
+        $this->manager->flush();
+
         // TODO: Add "create" functionality from Doctrine.
         // Please avoid using custom queries as possible.
     }
@@ -71,6 +84,10 @@ class DoctrineRepository implements RepositoryInterface
      */
     public function resource($resource)
     {
+        $this->entity = $resource;
+
+        return $this;
+
         // TODO: Add "resource" functionality from Doctrine.
         // Please avoid using custom queries as possible.
     }
