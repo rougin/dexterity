@@ -76,7 +76,7 @@ class EloquentRepository implements RepositoryInterface
      */
     public function paginate($page, $limit)
     {
-        return $this->eloquent->paginate($limit, ['*'], 'page', $page);
+        return $this->eloquent->paginate($limit, array('*'), 'page', $page);
     }
 
     /**
@@ -100,9 +100,11 @@ class EloquentRepository implements RepositoryInterface
      */
     public function __call($method, $parameters)
     {
-        $class = array($this->eloquent, $method);
+        $class = array($this->eloquent, (string) $method);
 
-        $this->eloquent = call_user_func_array($class, $parameters);
+        $model = call_user_func_array($class, $parameters);
+
+        $this->eloquent = $model;
 
         return $this;
     }
