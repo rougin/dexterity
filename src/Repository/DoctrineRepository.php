@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManager;
  * @package Dexterity
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class DoctrineRepository implements RepositoryInterface
+class DoctrineRepository implements ReadableInterface
 {
     /**
      * @var string
@@ -33,26 +33,6 @@ class DoctrineRepository implements RepositoryInterface
     }
 
     /**
-     * Stores a newly created resource in storage.
-     *
-     * @param  array $data
-     * @return mixed
-     */
-    public function create($data)
-    {
-        $entity = new $this->entity;
-
-        $entity->create($data);
-
-        $this->manager->persist($entity);
-
-        $this->manager->flush();
-
-        // TODO: Add "create" functionality from Doctrine.
-        // Please avoid using custom queries as possible.
-    }
-
-    /**
      * Deletes the specified resource from storage.
      *
      * @param  array|integer $id
@@ -60,8 +40,11 @@ class DoctrineRepository implements RepositoryInterface
      */
     public function delete($id)
     {
-        // TODO: Add "delete" functionality from Doctrine.
-        // Please avoid using custom queries as possible.
+        $item = $this->find((integer) $id);
+
+        $this->manager->remove($item);
+
+        return $this->manager->flush();
     }
 
     /**
@@ -72,8 +55,7 @@ class DoctrineRepository implements RepositoryInterface
      */
     public function find($id)
     {
-        // TODO: Add "find" functionality from Doctrine.
-        // Please avoid using custom queries as possible.
+        return $this->manager->find($this->entity, $id);
     }
 
     /**
@@ -87,9 +69,6 @@ class DoctrineRepository implements RepositoryInterface
         $this->entity = $resource;
 
         return $this;
-
-        // TODO: Add "resource" functionality from Doctrine.
-        // Please avoid using custom queries as possible.
     }
 
     /**
@@ -97,24 +76,30 @@ class DoctrineRepository implements RepositoryInterface
      *
      * @param  integer $page
      * @param  integer $limit
+     * @param  array   $criteria
+     * @param  array   $order
      * @return array
      */
-    public function paginate($page, $limit)
+    public function paginate($page, $limit, $criteria = array(), $order = array())
     {
-        // TODO: Add "paginate" functionality from Doctrine.
-        // Please avoid using custom queries as possible.
+        $repository = $this->manager->getRepository($this->entity);
+
+        return $repository->findBy($criteria, $order, $limit, $page);
     }
 
     /**
-     * Updates the specified resource in storage.
+     * Calls methods from the EntityRepository instance.
      *
-     * @param  array|integer $id
-     * @param  array         $data
-     * @return boolean
+     * @param  string $method
+     * @param  mixed  $parameters
+     * @return self
      */
-    public function update($id, $data)
+    public function __call($method, $parameters)
     {
-        // TODO: Add "update" functionality from Doctrine.
-        // Please avoid using custom queries as possible.
+        $repository = $this->manager->getRepository($this->entity);
+
+        $class = array($repository, (string) $method);
+
+        return call_user_func_array($class, $parameters);
     }
 }
