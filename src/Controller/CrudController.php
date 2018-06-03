@@ -14,11 +14,11 @@ use Rougin\Dexterity\Repository\RepositoryInterface;
 class CrudController implements ControllerInterface
 {
     /**
-     * The name of the Eloquent model to be used.
+     * The name of the entity to be used.
      *
      * @var string
      */
-    protected $model = '';
+    protected $entity = '';
 
     /**
      * The RepositoryInterface object.
@@ -44,7 +44,7 @@ class CrudController implements ControllerInterface
     {
         $this->request = $request;
 
-        $this->model && $repository->resource($this->model);
+        $this->entity && $repository->entity($this->entity);
 
         $this->repository = $repository;
     }
@@ -63,7 +63,7 @@ class CrudController implements ControllerInterface
     /**
      * Displays a listing of the resource.
      *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * @return array
      */
     public function index()
     {
@@ -97,16 +97,16 @@ class CrudController implements ControllerInterface
     }
 
     /**
-     * Sets the name of the Eloquent.
+     * Sets the name of the resource.
      *
-     * @param  string $model
+     * @param  string $entity
      * @return self
      */
-    public function model($model)
+    public function entity($entity)
     {
-        $this->model = $model;
+        $this->entity = (string) $entity;
 
-        $this->repository->resource($model);
+        $this->repository->entity($entity);
 
         return $this;
     }
@@ -114,7 +114,7 @@ class CrudController implements ControllerInterface
     /**
      * Stores a newly created resource in storage.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
      */
     public function store()
     {
@@ -127,7 +127,7 @@ class CrudController implements ControllerInterface
      * Displays the specified resource.
      *
      * @param  array|integer $id
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return mixed
      */
     public function show($id)
     {
