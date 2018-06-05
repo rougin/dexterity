@@ -2,11 +2,8 @@
 
 namespace Rougin\Dexterity\Controller;
 
-use Rougin\Dexterity\Repository\RepositoryInterface;
-use Rougin\Slytherin\Template\RendererInterface;
-
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Rougin\Dexterity\Renderer\RendererInterface;
 
 /**
  * View Controller
@@ -45,20 +42,6 @@ class ViewController extends CrudController
     protected $link = '/';
 
     /**
-     * The template renderer to be used for display the view files.
-     *
-     * @var \Rougin\Slytherin\Template\RendererInterface
-     */
-    protected $renderer;
-
-    /**
-     * Object used to return the output from the controller.
-     *
-     * @var \Psr\Http\Message\ResponseInterface
-     */
-    protected $response;
-
-    /**
      * The result from the called methods.
      *
      * @var mixed
@@ -66,38 +49,18 @@ class ViewController extends CrudController
     protected $result;
 
     /**
-     * Initializes the controller instance.
-     *
-     * @param \Rougin\Slytherin\Template\RendererInterface     $renderer
-     * @param \Psr\Http\Message\ResponseInterface              $response
-     * @param \Rougin\Dexterity\Repository\RepositoryInterface $repository
-     * @param \Psr\Http\Message\ServerRequestInterface         $request
-     */
-    public function __construct(RendererInterface $renderer, ResponseInterface $response, RepositoryInterface $repository, ServerRequestInterface $request)
-    {
-        parent::__construct($repository, $request);
-
-        $this->renderer = $renderer;
-
-        $this->response = $response;
-    }
-
-    /**
      * Shows the form for creating a new resource.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @return string
      */
-    public function create()
+    public function create(RendererInterface $renderer)
     {
         $view = sprintf('%s.create', $this->folder);
 
-        $this->file && $view = $this->file;
+        $this->file && $view = (string) $this->file;
 
-        $rendered = $this->renderer->render($view, $this->data);
-
-        $this->response->getBody()->write($rendered);
-
-        return $this->response;
+        return $renderer->render($view, $this->data);
     }
 
     /**
@@ -116,35 +79,33 @@ class ViewController extends CrudController
     /**
      * Removes the specified resource from storage.
      *
+     * @param  \Psr\Http\Message\ResponseInterface $response
      * @param  integer $id
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function delete($id)
+    public function delete(ResponseInterface $response, $id)
     {
-        $deleted = parent::delete($id);
+        $deleted = parent::delete((integer) $id);
 
-        return $this->redirect($this->link);
+        return $this->redirect($response, $this->link);
     }
 
     /**
      * Shows the form for updating a resource.
      *
-     * @param  array|integer $id
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @param  array|integer                                $id
+     * @return string
      */
-    public function edit($id)
+    public function edit(RendererInterface $renderer, $id)
     {
-        $this->data['item'] = parent::show($id);
+        $this->data['item'] = parent::show((integer) $id);
 
         $view = sprintf('%s.edit', $this->folder);
 
-        $this->file && $view = $this->file;
+        $this->file && $view = (string) $this->file;
 
-        $rendered = $this->renderer->render($view, $this->data);
-
-        $this->response->getBody()->write($rendered);
-
-        return $this->response;
+        return $renderer->render($view, $this->data);
     }
 
     /**
@@ -176,21 +137,18 @@ class ViewController extends CrudController
     /**
      * Displays a listing of the resource.
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @return string
      */
-    public function index()
+    public function index(RendererInterface $renderer)
     {
-        $this->data['result'] = parent::index();
-
         $view = sprintf('%s.index', $this->folder);
 
-        $this->file && $view = $this->file;
+        $this->data['result'] = parent::index();
 
-        $rendered = $this->renderer->render($view, $this->data);
+        $this->file && $view = (string) $this->file;
 
-        $this->response->getBody()->write($rendered);
-
-        return $this->response;
+        return $renderer->render($view, $this->data);
     }
 
     /**
@@ -219,59 +177,57 @@ class ViewController extends CrudController
     /**
      * Displays the specified resource.
      *
-     * @param  array|integer $id
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @param  array|integer                                $id
+     * @return string
      */
     public function show($id)
     {
+        $view = sprintf('%s.show', (string) $this->folder);
+
         $this->data['item'] = $this->result = parent::show($id);
 
-        $view = sprintf('%s.show', $this->folder);
+        $this->file && $view = (string) $this->file;
 
-        $this->file && $view = $this->file;
-
-        $rendered = $this->renderer->render($view, $this->data);
-
-        $this->response->getBody()->write($rendered);
-
-        return $this->response;
+        return $renderer->render($view, $this->data);
     }
 
     /**
      * Stores a newly created resource in storage.
      *
+     * @param  \Psr\Http\Message\ResponseInterface $response
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function store()
+    public function store(ResponseInterface $response)
     {
         $this->result = parent::store();
 
-        return $this->redirect($this->link);
+        return $this->redirect($response, $this->link);
     }
 
     /**
      * Updates the specified resource in storage.
      *
-     * @param  integer $id
+     * @param  \Psr\Http\Message\ResponseInterface $response
+     * @param  integer                             $id
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function update($id)
+    public function update(ResponseInterface $response, $id)
     {
-        $this->result = parent::update($id);
+        $this->result = parent::update((integer) $id);
 
-        return $this->redirect($this->link);
+        return $this->redirect($response, $this->link);
     }
 
     /**
-     * Returns a redirect response.
+     * Returns a HTTP 301 response back to the user.
      *
-     * @param  string $url
+     * @param  \Psr\Http\Message\ResponseInterface $response
+     * @param  string                              $url
      * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function redirect($url)
+    protected function redirect(ResponseInterface $response, $url)
     {
-        $response = $this->response->withStatus(302);
-
-        return $response->withHeader('Location', $url);
+        return $response->withStatus(302)->withHeader('Location', $url);
     }
 }
