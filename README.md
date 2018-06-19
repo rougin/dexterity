@@ -61,7 +61,6 @@ The MIT License (MIT). Please see [LICENSE.md][link-license] for more informatio
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/rougin/dexterity.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/rougin/dexterity.svg?style=flat-square
 
-[link-author]: https://rougin.github.io
 [link-code-quality]: https://scrutinizer-ci.com/g/rougin/dexterity
 [link-contributors]: https://github.com/rougin/dexterity/contributors
 [link-downloads]: https://packagist.org/packages/rougin/dexterity
