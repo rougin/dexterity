@@ -7,17 +7,17 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-"Ready-to-eat" and framework agnostic CRUD controllers.
+"Ready-to-eat" and framework-agnostic CRUD controllers.
 
-## Install
+## Installation
 
-Via Composer
+Install `Dexterity` via [Composer](https://getcomposer.org/):
 
 ``` bash
 $ composer require rougin/dexterity
 ```
 
-## Usage
+## Basic Usage
 
 ``` php
 use Acme\Common\Models\PatientModel;
@@ -40,9 +40,9 @@ $patients = $controller->index();
 $patient = $controller->find(10);
 ```
 
-## Change log
+## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
 ## Testing
 
@@ -52,15 +52,16 @@ $ vendor/bin/phpunit
 
 ## License
 
-The MIT License (MIT). Please see [LICENSE.md][link-license] for more information.
+The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/rougin/dexterity.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/rougin/dexterity/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/rougin/dexterity.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/rougin/dexterity.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/rougin/dexterity.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/rougin/dexterity.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/rougin/dexterity/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/rougin/dexterity.svg?style=flat-square
 
+[link-changelog]: https://github.com/rougin/dexterity/CHANGELOG.md
 [link-code-quality]: https://scrutinizer-ci.com/g/rougin/dexterity
 [link-contributors]: https://github.com/rougin/dexterity/contributors
 [link-downloads]: https://packagist.org/packages/rougin/dexterity
