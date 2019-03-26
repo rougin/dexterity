@@ -9,7 +9,7 @@ use Rougin\Dexterity\Repository\RepositoryInterface;
  * CRUD Controller
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class CrudController implements ControllerInterface
 {
@@ -67,13 +67,13 @@ class CrudController implements ControllerInterface
      */
     public function index()
     {
-        $defaults = array('query' => null, 'limit' => null);
+        $default = array('query' => null, 'limit' => null, 'page' => null);
 
         $query = (array) $this->request->getQueryParams();
 
-        $defaults = (array) array_merge($defaults, $query);
+        $default = array_merge($default, (array) $query);
 
-        return $this->repository->paginate($limit, $current);
+        return $this->repository->paginate($default['page'], $default['limit']);
     }
 
     /**
@@ -83,17 +83,9 @@ class CrudController implements ControllerInterface
      * @param  boolean $replace
      * @return self
      */
-    public function input($parameters, $replace = false)
+    public function input(array $parameters, $replace = false)
     {
-        $data = $this->request->getParsedBody();
-
-        $data = array_merge($data, $parameters);
-
-        $replace && $data = (array) $parameters;
-
-        $this->request = $this->request->withParsedBody($data);
-
-        return $this;
+        return $this->replace($parameters, $replace, 'body');
     }
 
     /**
@@ -109,6 +101,18 @@ class CrudController implements ControllerInterface
         $this->repository->entity($entity);
 
         return $this;
+    }
+
+    /**
+     * Adds additional query parameters to the ServerRequest instance.
+     *
+     * @param  array   $parameters
+     * @param  boolean $replace
+     * @return self
+     */
+    public function query(array $parameters, $replace = false)
+    {
+        return $this->replace($parameters, $replace, 'query');
     }
 
     /**
@@ -159,6 +163,33 @@ class CrudController implements ControllerInterface
         $class = array($this->repository, (string) $method);
 
         $this->repository = call_user_func_array($class, $parameters);
+
+        return $this;
+    }
+
+    /**
+     * Adds additional parameters to the ServerRequest instance.
+     *
+     * @param  array   $parameters
+     * @param  boolean $replace
+     * @param  string  $type
+     * @return self
+     */
+    protected function replace(array $parameters, $replace = false, $type)
+    {
+        $methods = array('query' => 'QueryParams', 'body' => 'ParsedBody');
+
+        $request = array($this->request, 'get' . $methods[$type]);
+
+        $data = call_user_func_array($request, array());
+
+        $data = array_merge((array) $data, $parameters);
+
+        $replace && $data = (array) $parameters;
+
+        $request = array($this->request, 'with' . $methods[$type]);
+
+        $this->request = call_user_func_array($request, array($data));
 
         return $this;
     }
