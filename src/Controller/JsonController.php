@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
  * JSON Controller
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class JsonController extends CrudController
 {
