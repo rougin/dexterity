@@ -9,7 +9,7 @@ use Rougin\Dexterity\Renderer\RendererInterface;
  * View Controller
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class ViewController extends CrudController
 {
