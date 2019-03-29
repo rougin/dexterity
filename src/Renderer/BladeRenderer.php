@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\Factory;
  * Laravel Blade Renderer
  *
  * @package Concordat
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class BladeRenderer implements RendererInterface
 {
