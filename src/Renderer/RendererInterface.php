@@ -8,7 +8,7 @@ namespace Rougin\Dexterity\Renderer;
  * An interface for handling third party template engines.
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 interface RendererInterface
 {
