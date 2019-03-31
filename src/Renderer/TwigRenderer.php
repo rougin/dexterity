@@ -6,7 +6,7 @@ namespace Rougin\Dexterity\Renderer;
  * Twig Renderer
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class TwigRenderer implements RendererInterface
 {
