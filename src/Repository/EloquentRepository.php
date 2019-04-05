@@ -6,7 +6,7 @@ namespace Rougin\Dexterity\Repository;
  * Eloquent Repository
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class EloquentRepository implements RepositoryInterface
 {
