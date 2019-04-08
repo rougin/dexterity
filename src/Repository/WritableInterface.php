@@ -6,7 +6,7 @@ namespace Rougin\Dexterity\Repository;
  * Writable Interface
  *
  * @package Dexterity
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 interface WritableInterface
 {
