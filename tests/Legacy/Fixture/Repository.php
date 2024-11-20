@@ -1,8 +1,8 @@
 <?php
 
-namespace Rougin\Dexterity\Fixture;
+namespace Rougin\Dexterity\Legacy\Fixture;
 
-use Rougin\Dexterity\Repository\RepositoryInterface;
+use Rougin\Dexterity\Legacy\Repository\RepositoryInterface;
 
 /**
  * Repository

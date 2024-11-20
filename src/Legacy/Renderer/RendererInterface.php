@@ -1,6 +1,6 @@
 <?php
 
-namespace Rougin\Dexterity\Renderer;
+namespace Rougin\Dexterity\Legacy\Renderer;
 
 /**
  * Renderer Interface

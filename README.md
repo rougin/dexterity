@@ -2,43 +2,23 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]][link-license]
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
+[![Build Status][ico-build]][link-build]
+[![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-"Ready-to-eat" and framework-agnostic CRUD controllers.
+`Dexterity` is a utility package written in PHP that provides simple and extensible PHP classes in handling business logic easily (using `Depots`) and easily create HTTP routes that conform to the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard.
 
 ## Installation
 
-Install `Dexterity` via [Composer](https://getcomposer.org/):
+Install the `Dexterity` package via [Composer](https://getcomposer.org/):
 
 ``` bash
 $ composer require rougin/dexterity
 ```
 
-## Basic Usage
+## Basic usage
 
-``` php
-use Acme\Common\Models\PatientModel;
-use Acme\Repositories\OrmRepository;
-use Acme\Http\Message\ServerRequest;
-use Rougin\Dexterity\Controller\CrudController;
-
-$repository = new OrmRepository;
-
-$request = new ServerRequest;
-
-$controller = new CrudController($repository, $request);
-
-$controller->model(PatientModel::class);
-
-// Returns an array of PatientModel objects
-$patients = $controller->index();
-
-// Returns a specific PatientModel object
-$patient = $controller->find(10);
-```
+...
 
 ## Changelog
 
@@ -46,26 +26,36 @@ Please see [CHANGELOG][link-changelog] for more information what has changed rec
 
 ## Testing
 
+If there is a need to check the source code of `Dexterity` for development purposes (e.g., creating fixes, new features, etc.), kindly clone this repository first to a local machine:
+
 ``` bash
-$ vendor/bin/phpunit
+$ git clone https://github.com/rougin/dexterity.git "Sample"
 ```
+
+After cloning, use `Composer` to install its required packages:
+
+``` bash
+$ cd Sample
+$ composer update
+```
+
+> [!NOTE]
+> Please see also the [build.yml](https://github.com/rougin/dexterity/blob/master/.github/workflows/build.yml) of `Dexterity` to check any packages that needs to be installed based on the PHP version.
 
 ## License
 
 The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/rougin/dexterity.svg?style=flat-square
+[ico-build]: https://img.shields.io/github/actions/workflow/status/rougin/dexterity/build.yml?style=flat-square
+[ico-coverage]: https://img.shields.io/codecov/c/github/rougin/dexterity?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/rougin/dexterity.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/rougin/dexterity.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/rougin/dexterity/master.svg?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/rougin/dexterity.svg?style=flat-square
 
-[link-changelog]: https://github.com/rougin/dexterity/CHANGELOG.md
-[link-code-quality]: https://scrutinizer-ci.com/g/rougin/dexterity
+[link-build]: https://github.com/rougin/dexterity/actions
+[link-changelog]: https://github.com/rougin/dexterity/blob/master/CHANGELOG.md
 [link-contributors]: https://github.com/rougin/dexterity/contributors
+[link-coverage]: https://app.codecov.io/gh/rougin/dexterity
 [link-downloads]: https://packagist.org/packages/rougin/dexterity
-[link-license]: https://github.com/rougin/dexterity/LICENSE.md
+[link-license]: https://github.com/rougin/dexterity/blob/master/LICENSE.md
 [link-packagist]: https://packagist.org/packages/rougin/dexterity
-[link-scrutinizer]: https://scrutinizer-ci.com/g/rougin/dexterity/code-structure
-[link-travis]: https://travis-ci.org/rougin/dexterity

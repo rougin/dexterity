@@ -1,6 +1,6 @@
 <?php
 
-namespace Rougin\Dexterity\Fixture;
+namespace Rougin\Dexterity\Legacy\Fixture;
 
 /**
  * Terminator

@@ -1,9 +1,9 @@
 <?php
 
-namespace Rougin\Dexterity\Controller;
+namespace Rougin\Dexterity\Legacy\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use Rougin\Dexterity\Renderer\RendererInterface;
+use Rougin\Dexterity\Legacy\Renderer\RendererInterface;
 
 /**
  * View Controller
@@ -51,7 +51,7 @@ class ViewController extends CrudController
     /**
      * Shows the form for creating a new resource.
      *
-     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
      * @return string
      */
     public function create(RendererInterface $renderer)
@@ -93,7 +93,7 @@ class ViewController extends CrudController
     /**
      * Shows the form for updating a resource.
      *
-     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
      * @param  array|integer                                $id
      * @return string
      */
@@ -137,7 +137,7 @@ class ViewController extends CrudController
     /**
      * Displays a listing of the resource.
      *
-     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
      * @return string
      */
     public function index(RendererInterface $renderer)
@@ -177,7 +177,7 @@ class ViewController extends CrudController
     /**
      * Displays the specified resource.
      *
-     * @param  \Rougin\Dexterity\Renderer\RendererInterface $renderer
+     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
      * @param  array|integer                                $id
      * @return string
      */

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rougin\Dexterity\Renderer;
+namespace Rougin\Dexterity\Legacy\Renderer;
 
 use Illuminate\Contracts\View\Factory;
 

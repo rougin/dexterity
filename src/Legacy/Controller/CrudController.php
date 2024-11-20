@@ -1,9 +1,9 @@
 <?php
 
-namespace Rougin\Dexterity\Controller;
+namespace Rougin\Dexterity\Legacy\Controller;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Rougin\Dexterity\Repository\RepositoryInterface;
+use Rougin\Dexterity\Legacy\Repository\RepositoryInterface;
 
 /**
  * CRUD Controller
@@ -23,7 +23,7 @@ class CrudController implements ControllerInterface
     /**
      * The RepositoryInterface object.
      *
-     * @var \Rougin\Dexterity\Repository\RepositoryInterface
+     * @var \Rougin\Dexterity\Legacy\Repository\RepositoryInterface
      */
     protected $repository;
 
@@ -37,7 +37,7 @@ class CrudController implements ControllerInterface
     /**
      * Initializes the controller instance.
      *
-     * @param \Rougin\Dexterity\Repository\RepositoryInterface $repository
+     * @param \Rougin\Dexterity\Legacy\Repository\RepositoryInterface $repository
      * @param \Psr\Http\Message\ServerRequestInterface         $request
      */
     public function __construct(RepositoryInterface $repository, ServerRequestInterface $request)

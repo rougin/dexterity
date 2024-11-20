@@ -1,6 +1,6 @@
 <?php
 
-namespace Rougin\Dexterity\Controller;
+namespace Rougin\Dexterity\Legacy\Controller;
 
 /**
  * Controller Interface

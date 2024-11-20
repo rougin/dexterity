@@ -1,15 +1,15 @@
 <?php
 
-namespace Rougin\Dexterity\Controller;
+namespace Rougin\Dexterity\Legacy\Controller;
 
-use Rougin\Dexterity\Fixture\Repository;
-use Rougin\Dexterity\Fixture\Terminator;
+use Rougin\Dexterity\Legacy\Fixture\Repository;
+use Rougin\Dexterity\Legacy\Fixture\Terminator;
 use Rougin\Slytherin\Http\ServerRequest;
 
 class CrudControllerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Rougin\Dexterity\Controller\ControllerInterface
+     * @var \Rougin\Dexterity\Legacy\Controller\ControllerInterface
      */
     protected $controller;
 

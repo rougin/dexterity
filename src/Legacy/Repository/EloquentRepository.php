@@ -1,6 +1,6 @@
 <?php
 
-namespace Rougin\Dexterity\Repository;
+namespace Rougin\Dexterity\Legacy\Repository;
 
 /**
  * Eloquent Repository
