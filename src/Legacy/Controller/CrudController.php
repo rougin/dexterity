@@ -6,10 +6,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Rougin\Dexterity\Legacy\Repository\RepositoryInterface;
 
 /**
- * CRUD Controller
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class CrudController implements ControllerInterface
 {
@@ -38,7 +37,7 @@ class CrudController implements ControllerInterface
      * Initializes the controller instance.
      *
      * @param \Rougin\Dexterity\Legacy\Repository\RepositoryInterface $repository
-     * @param \Psr\Http\Message\ServerRequestInterface         $request
+     * @param \Psr\Http\Message\ServerRequestInterface                $request
      */
     public function __construct(RepositoryInterface $repository, ServerRequestInterface $request)
     {
@@ -52,7 +51,8 @@ class CrudController implements ControllerInterface
     /**
      * Removes the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function delete($id)
@@ -79,8 +79,9 @@ class CrudController implements ControllerInterface
     /**
      * Adds additional input to the ServerRequest instance.
      *
-     * @param  array   $parameters
-     * @param  boolean $replace
+     * @param array   $parameters
+     * @param boolean $replace
+     *
      * @return self
      */
     public function input(array $parameters, $replace = false)
@@ -91,7 +92,8 @@ class CrudController implements ControllerInterface
     /**
      * Sets the name of the resource.
      *
-     * @param  string $entity
+     * @param string $entity
+     *
      * @return self
      */
     public function entity($entity)
@@ -106,8 +108,9 @@ class CrudController implements ControllerInterface
     /**
      * Adds additional query parameters to the ServerRequest instance.
      *
-     * @param  array   $parameters
-     * @param  boolean $replace
+     * @param array   $parameters
+     * @param boolean $replace
+     *
      * @return self
      */
     public function query(array $parameters, $replace = false)
@@ -130,7 +133,8 @@ class CrudController implements ControllerInterface
     /**
      * Displays the specified resource.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return mixed
      */
     public function show($id)
@@ -141,7 +145,8 @@ class CrudController implements ControllerInterface
     /**
      * Updates the specified resource in storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function update($id)
@@ -154,8 +159,9 @@ class CrudController implements ControllerInterface
     /**
      * Calls methods from the Repository instance.
      *
-     * @param  string $method
-     * @param  mixed  $parameters
+     * @param string $method
+     * @param mixed  $parameters
+     *
      * @return self
      */
     public function __call($method, $parameters)
@@ -170,9 +176,10 @@ class CrudController implements ControllerInterface
     /**
      * Adds additional parameters to the ServerRequest instance.
      *
-     * @param  array   $parameters
-     * @param  boolean $replace
-     * @param  string  $type
+     * @param array   $parameters
+     * @param boolean $replace
+     * @param string  $type
+     *
      * @return self
      */
     protected function replace(array $parameters, $replace = false, $type)

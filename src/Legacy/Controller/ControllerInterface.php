@@ -3,17 +3,17 @@
 namespace Rougin\Dexterity\Legacy\Controller;
 
 /**
- * Controller Interface
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 interface ControllerInterface
 {
     /**
      * Removes the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function delete($id);
@@ -35,7 +35,8 @@ interface ControllerInterface
     /**
      * Displays the specified resource.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function show($id);
@@ -43,7 +44,8 @@ interface ControllerInterface
     /**
      * Updates the specified resource in storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function update($id);

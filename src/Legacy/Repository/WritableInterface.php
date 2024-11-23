@@ -3,17 +3,17 @@
 namespace Rougin\Dexterity\Legacy\Repository;
 
 /**
- * Writable Interface
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 interface WritableInterface
 {
     /**
      * Stores a newly created resource in storage.
      *
-     * @param  array $data
+     * @param array $data
+     *
      * @return mixed
      */
     public function create($data);
@@ -21,7 +21,8 @@ interface WritableInterface
     /**
      * Deletes the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function delete($id);
@@ -29,8 +30,9 @@ interface WritableInterface
     /**
      * Updates the specified resource in storage.
      *
-     * @param  array|integer $id
-     * @param  array         $data
+     * @param array|integer $id
+     * @param array         $data
+     *
      * @return boolean
      */
     public function update($id, $data);

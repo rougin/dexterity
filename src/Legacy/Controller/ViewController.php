@@ -6,10 +6,9 @@ use Psr\Http\Message\ResponseInterface;
 use Rougin\Dexterity\Legacy\Renderer\RendererInterface;
 
 /**
- * View Controller
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class ViewController extends CrudController
 {
@@ -51,7 +50,8 @@ class ViewController extends CrudController
     /**
      * Shows the form for creating a new resource.
      *
-     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
+     * @param \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
+     *
      * @return string
      */
     public function create(RendererInterface $renderer)
@@ -66,7 +66,8 @@ class ViewController extends CrudController
     /**
      * Sets the values to be passed into the view.
      *
-     * @param  array $data
+     * @param array $data
+     *
      * @return self
      */
     public function data(array $data)
@@ -79,13 +80,14 @@ class ViewController extends CrudController
     /**
      * Removes the specified resource from storage.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  integer $id
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param integer                             $id
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function delete(ResponseInterface $response, $id)
     {
-        $deleted = parent::delete((integer) $id);
+        $deleted = parent::delete((int) $id);
 
         return $this->redirect($response, $this->link);
     }
@@ -93,13 +95,14 @@ class ViewController extends CrudController
     /**
      * Shows the form for updating a resource.
      *
-     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
-     * @param  array|integer                                $id
+     * @param \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
+     * @param array|integer                                       $id
+     *
      * @return string
      */
     public function edit(RendererInterface $renderer, $id)
     {
-        $this->data['item'] = parent::show((integer) $id);
+        $this->data['item'] = parent::show((int) $id);
 
         $view = sprintf('%s.edit', $this->folder);
 
@@ -111,7 +114,8 @@ class ViewController extends CrudController
     /**
      * Sets the file name for the selected view template.
      *
-     * @param  string $file
+     * @param string $file
+     *
      * @return self
      */
     public function file($file)
@@ -124,7 +128,8 @@ class ViewController extends CrudController
     /**
      * Sets the folder name for the controller.
      *
-     * @param  string $folder
+     * @param string $folder
+     *
      * @return self
      */
     public function folder($folder)
@@ -137,7 +142,8 @@ class ViewController extends CrudController
     /**
      * Displays a listing of the resource.
      *
-     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
+     * @param \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
+     *
      * @return string
      */
     public function index(RendererInterface $renderer)
@@ -154,7 +160,8 @@ class ViewController extends CrudController
     /**
      * Sets the redirection link for the controller.
      *
-     * @param  string $link
+     * @param string $link
+     *
      * @return self
      */
     public function link($link)
@@ -177,8 +184,9 @@ class ViewController extends CrudController
     /**
      * Displays the specified resource.
      *
-     * @param  \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
-     * @param  array|integer                                $id
+     * @param \Rougin\Dexterity\Legacy\Renderer\RendererInterface $renderer
+     * @param array|integer                                       $id
+     *
      * @return string
      */
     public function show($id)
@@ -195,7 +203,8 @@ class ViewController extends CrudController
     /**
      * Stores a newly created resource in storage.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function store(ResponseInterface $response)
@@ -208,13 +217,14 @@ class ViewController extends CrudController
     /**
      * Updates the specified resource in storage.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  integer                             $id
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param integer                             $id
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function update(ResponseInterface $response, $id)
     {
-        $this->result = parent::update((integer) $id);
+        $this->result = parent::update((int) $id);
 
         return $this->redirect($response, $this->link);
     }
@@ -222,8 +232,9 @@ class ViewController extends CrudController
     /**
      * Returns a HTTP 301 response back to the user.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  string                              $url
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string                              $url
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function redirect(ResponseInterface $response, $url)

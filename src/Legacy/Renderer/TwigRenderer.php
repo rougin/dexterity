@@ -3,10 +3,9 @@
 namespace Rougin\Dexterity\Legacy\Renderer;
 
 /**
- * Twig Renderer
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class TwigRenderer implements RendererInterface
 {
@@ -28,8 +27,9 @@ class TwigRenderer implements RendererInterface
     /**
      * Renders a file into a HTML file.
      *
-     * @param  string $file
-     * @param  array  $data
+     * @param string $file
+     * @param array  $data
+     *
      * @return string
      */
     public function render($file, array $data = array())
@@ -40,8 +40,9 @@ class TwigRenderer implements RendererInterface
     /**
      * Calls a method from the Twig instance.
      *
-     * @param  string $method
-     * @param  mixed  $parameters
+     * @param string $method
+     * @param mixed  $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)

@@ -5,27 +5,30 @@ namespace Rougin\Dexterity\Legacy\Controller;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * JSON Controller
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class JsonController extends CrudController
 {
     /**
      * Removes the specified resource from storage.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  array|integer                       $id
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array|integer                       $id
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function delete(ResponseInterface $response, $id)
     {
-        try {
+        try
+        {
             list($code, $result) = array(204, null);
 
             parent::delete($id);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             $message = $e->getCode() . ': ' . $e->getMessage();
 
             list($code, $result) = array(404, $message);
@@ -37,7 +40,8 @@ class JsonController extends CrudController
     /**
      * Displays a listing of the resource.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function index(ResponseInterface $response)
@@ -50,7 +54,8 @@ class JsonController extends CrudController
     /**
      * Stores a newly created resource in storage.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
+     * @param \Psr\Http\Message\ResponseInterface $response
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function store(ResponseInterface $response)
@@ -61,17 +66,21 @@ class JsonController extends CrudController
     /**
      * Displays the specified resource.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  array|integer                       $id
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array|integer                       $id
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function show(ResponseInterface $response, $id)
     {
-        try {
+        try
+        {
             $item = (array) parent::show($id)->toArray();
 
             list($code, $result) = array(200, $item);
-        } catch (\Exception $error) {
+        }
+        catch (\Exception $error)
+        {
             $message = (string) $error->getCode() . ': ';
 
             $message = $message . $error->getMessage();
@@ -85,17 +94,21 @@ class JsonController extends CrudController
     /**
      * Updates the specified resource in storage.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  array|integer                       $id
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array|integer                       $id
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function update(ResponseInterface $response, $id)
     {
-        try {
+        try
+        {
             list($code, $result) = array(204, null);
 
-            parent::update((integer) $id);
-        } catch (\Exception $error) {
+            parent::update((int) $id);
+        }
+        catch (\Exception $error)
+        {
             $message = (string) $error->getCode() . ': ';
 
             $message = $message . $error->getMessage();
@@ -109,14 +122,15 @@ class JsonController extends CrudController
     /**
      * Returns the response in "application/json" content.
      *
-     * @param  \Psr\Http\Message\ResponseInterface $response
-     * @param  mixed|null                          $data
-     * @param  integer                             $code
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param mixed|null                          $data
+     * @param integer                             $code
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function json(ResponseInterface $response, $data = null, $code = 200)
     {
-        $response = $response->withStatus((integer) $code);
+        $response = $response->withStatus((int) $code);
 
         $response->getBody()->write(json_encode($data));
 

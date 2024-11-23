@@ -5,10 +5,9 @@ namespace Rougin\Dexterity\Legacy\Fixture;
 use Rougin\Dexterity\Legacy\Repository\RepositoryInterface;
 
 /**
- * Repository
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class Repository implements RepositoryInterface
 {
@@ -17,7 +16,8 @@ class Repository implements RepositoryInterface
     /**
      * Stores a newly created resource in storage.
      *
-     * @param  array $data
+     * @param array $data
+     *
      * @return mixed
      */
     public function create($data)
@@ -28,7 +28,8 @@ class Repository implements RepositoryInterface
     /**
      * Deletes the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function delete($id)
@@ -39,7 +40,8 @@ class Repository implements RepositoryInterface
     /**
      * Finds the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return mixed
      */
     public function find($id)
@@ -50,16 +52,18 @@ class Repository implements RepositoryInterface
     /**
      * Paginates the specified page number and items per page.
      *
-     * @param  integer $page
-     * @param  integer $limit
+     * @param integer $page
+     * @param integer $limit
+     *
      * @return array
      */
     public function paginate($page, $limit)
     {
         $classes = array();
 
-        foreach (array(1, 2, 3, 4, 5) as $id) {
-            $new = (integer) ($id + $limit);
+        foreach (array(1, 2, 3, 4, 5) as $id)
+        {
+            $new = (int) ($id + $limit);
 
             $classes[] = new Terminator($new);
         }
@@ -70,8 +74,9 @@ class Repository implements RepositoryInterface
     /**
      * Updates the specified resource in storage.
      *
-     * @param  array|integer $id
-     * @param  array         $data
+     * @param array|integer $id
+     * @param array         $data
+     *
      * @return boolean
      */
     public function update($id, $data)

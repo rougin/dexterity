@@ -5,10 +5,9 @@ namespace Rougin\Dexterity\Legacy\Repository;
 use Doctrine\ORM\EntityManager;
 
 /**
- * Doctrine Repository
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class DoctrineRepository implements ReadableInterface
 {
@@ -35,12 +34,13 @@ class DoctrineRepository implements ReadableInterface
     /**
      * Deletes the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return boolean
      */
     public function delete($id)
     {
-        $item = $this->find((integer) $id);
+        $item = $this->find((int) $id);
 
         $this->manager->remove($item);
 
@@ -50,7 +50,8 @@ class DoctrineRepository implements ReadableInterface
     /**
      * Finds the specified resource from storage.
      *
-     * @param  array|integer $id
+     * @param array|integer $id
+     *
      * @return mixed
      */
     public function find($id)
@@ -61,7 +62,8 @@ class DoctrineRepository implements ReadableInterface
     /**
      * Sets the resource for the repository.
      *
-     * @param  string $resource
+     * @param string $resource
+     *
      * @return self
      */
     public function resource($resource)
@@ -74,10 +76,11 @@ class DoctrineRepository implements ReadableInterface
     /**
      * Paginates the specified page number and items per page.
      *
-     * @param  integer $page
-     * @param  integer $limit
-     * @param  array   $criteria
-     * @param  array   $order
+     * @param integer $page
+     * @param integer $limit
+     * @param array   $criteria
+     * @param array   $order
+     *
      * @return array
      */
     public function paginate($page, $limit, $criteria = array(), $order = array())
@@ -90,8 +93,9 @@ class DoctrineRepository implements ReadableInterface
     /**
      * Calls methods from the EntityRepository instance.
      *
-     * @param  string $method
-     * @param  mixed  $parameters
+     * @param string $method
+     * @param mixed  $parameters
+     *
      * @return self
      */
     public function __call($method, $parameters)

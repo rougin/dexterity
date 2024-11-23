@@ -3,10 +3,9 @@
 namespace Rougin\Dexterity\Legacy\Fixture;
 
 /**
- * Terminator
- *
  * @package Dexterity
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class Terminator
 {

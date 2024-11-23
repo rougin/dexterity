@@ -5,10 +5,9 @@ namespace Rougin\Dexterity\Legacy\Renderer;
 use Illuminate\Contracts\View\Factory;
 
 /**
- * Laravel Blade Renderer
- *
  * @package Concordat
- * @author  Rougin Gutib <rougingutib@gmail.com>
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
  */
 class BladeRenderer implements RendererInterface
 {
@@ -30,8 +29,9 @@ class BladeRenderer implements RendererInterface
     /**
      * Renders a file into a HTML file.
      *
-     * @param  string $file
-     * @param  array  $data
+     * @param string $file
+     * @param array  $data
+     *
      * @return string
      */
     public function render($template, array $data = array())
