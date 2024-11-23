@@ -6,7 +6,7 @@
 [![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-`Dexterity` is a utility package written in PHP that provides simple and extensible PHP classes in handling business logic easily (using `Depots`) and easily create HTTP routes that conform to the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard.
+`Dexterity` is a utility PHP package that provides extensible PHP classes for handling [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). It can also create HTTP routes that conforms to the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard.
 
 ## Installation
 
@@ -18,7 +18,12 @@ $ composer require rougin/dexterity
 
 ## Basic usage
 
-...
+The `Depot` class is a abstract class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
+
+
+
+> [!NOTE]
+> In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
 
 ## Changelog
 
