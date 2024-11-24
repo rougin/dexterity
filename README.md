@@ -20,10 +20,303 @@ $ composer require rougin/dexterity
 
 The `Depot` class is a abstract class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
 
+``` php
+namespace Acme\Depots;
 
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+}
+```
+
+If used, the specified methods may be defined depending on the usage from the `Depot`:
+
+### `create`
+
+A method that will be used for creating an item based on the provided payload:
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+/** @var array<string, mixed> */
+$data = /** ... */;
+
+/** @var \Acme\Sample\User */
+$item = $depot->create($data);
+```
+
+If the said method is being called, its logic must be defined from the `Depot` class:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserFactory;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    /**
+     * Creates a new item.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return \Acme\Sample\User
+     */
+    public function create($data)
+    {
+        return UserFactory::create($data);
+    }
+
+    // ...
+}
+```
+
+### `find`
+
+This method is one of the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) that tries to find an item based on the given unique identifier (e.g., `id`):
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+/** @var \Acme\Sample\User */
+$item = $depot->find(99);
+```
+
+To use the `find` method, kindly write its logic in the `findRow` method:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserReader;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    /**
+     * Returns the specified item.
+     *
+     * @param integer $id
+     *
+     * @return mixed
+     * @throws \UnexpectedValueException
+     */
+    protected function findRow($id)
+    {
+        $item = UserReader::find($id);
+
+        if (! $item)
+        {
+            throw new \UnexpectedValueException('Item not found');
+        }
+
+        return $item;
+    }
+}
+```
+
+If the specified identifier does not exists, it should throw an `UnexpectedValueException`.
 
 > [!NOTE]
 > In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
+
+### `get`
+
+One of the methods of `Depot` that returns an array of items based on the specified page number and its rows to be shown per page:
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+/** @var \Rougin\Dexterity\Result */
+$item = $depot->get(1, 10);
+```
+
+To use the `get` method, the methods `getItems` and `getTotal` should be defined:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserReader;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    /**
+     * Returns the items with filters.
+     *
+     * @param integer $page
+     * @param integer $limit
+     *
+     * @return mixed[]
+     */
+    protected function getItems($page, $limit)
+    {
+        return UserReader::getByLimit($limit, $page);
+    }
+
+    /**
+     * Returns the total number of items.
+     *
+     * @return integer
+     */
+    protected function getTotal()
+    {
+        return UserReader::totalRows();
+    }
+}
+```
+
+If the logic requires an offset instead of a page number, the `getOffset` method from `Depot` can be used:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserReader;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    protected function getItems($page, $limit)
+    {
+        $offset = $this->getOffset($page, $limit);
+
+        return UserReader::withOffset($offset, $limit);
+    }
+
+    // ...
+}
+```
+
+Using the `get` method returns a `Result` class, which can be used to for handling the result from the `Depot`:
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+/** @var \Rougin\Dexterity\Result */
+$item = $depot->get(1, 10);
+
+print_r($item->toArray());
+```
+
+### `update`
+
+The `Depot` class also provide a method to update details of the specified item using `update`:
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+/** @var array<string, mixed> */
+$data = /** ... */;
+
+$depot->update(99, $data);
+```
+
+When using the `update` method, its logic must also be defined:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserUpdater;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    /**
+     * Updates the specified item.
+     *
+     * @param integer              $id
+     * @param array<string, mixed> $data
+     *
+     * @return boolean
+     */
+    public function update($id, $data)
+    {
+        return UserUpdater::update($id, $data);
+    }
+}
+```
+
+### `delete`
+
+When deleting specified items, the `delete` method can be used from the `Depot` class:
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+$depot->delete(99);
+```
+
+Using this method requires other methods `deleteRow` and `rowExists` to be defined:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserDeleter;
+use Acme\Sample\UserReader;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    /**
+     * Deletes the specified item.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    protected function deleteRow($id)
+    {
+        return UserDeleter::delete($id);
+    }
+
+    /**
+     * Checks if the specified item exists.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    protected function rowExists($id)
+    {
+        return UserReader::exists($id);
+    }
+}
+```
 
 ## Changelog
 

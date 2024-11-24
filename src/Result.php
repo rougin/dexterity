@@ -2,6 +2,11 @@
 
 namespace Rougin\Dexterity;
 
+/**
+ * @package Dexterity
+ *
+ * @author Rougin Gutib <rougingutib@gmail.com>
+ */
 class Result
 {
     /**
@@ -34,7 +39,7 @@ class Result
     }
 
     /**
-     * Returns the result as an associative array.
+     * Returns the result in array format.
      *
      * @return array<string, integer|mixed[]>
      */
@@ -82,7 +87,7 @@ class Result
     }
 
     /**
-     * Returns the result in array format, if available.
+     * Returns the items in array format, if available.
      *
      * @return mixed[]
      */
