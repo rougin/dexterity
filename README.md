@@ -16,7 +16,7 @@ Install the `Dexterity` package via [Composer](https://getcomposer.org/):
 $ composer require rougin/dexterity
 ```
 
-## Basic usage
+## Using `Depot`
 
 The `Depot` class is a abstract class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
 
