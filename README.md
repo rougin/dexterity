@@ -79,7 +79,7 @@ class UserDepot extends Depot
 
 ### `find`
 
-This method is one of the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) that tries to find an item based on the given unique identifier (e.g., `id`):
+The `find` method is one of the CRUD operations that tries to find an item based on the given unique identifier (e.g., `id`):
 
 ``` php
 // index.php
@@ -109,7 +109,7 @@ class UserDepot extends Depot
      *
      * @param integer $id
      *
-     * @return mixed
+     * @return \Acme\Sample\User
      * @throws \UnexpectedValueException
      */
     protected function findRow($id)
@@ -164,7 +164,7 @@ class UserDepot extends Depot
      * @param integer $page
      * @param integer $limit
      *
-     * @return mixed[]
+     * @return \Acme\Sample\User[]
      */
     protected function getItems($page, $limit)
     {
@@ -195,6 +195,14 @@ class UserDepot extends Depot
 {
     // ...
 
+    /**
+     * Returns the items with filters.
+     *
+     * @param integer $page
+     * @param integer $limit
+     *
+     * @return \Acme\Sample\User[]
+     */
     protected function getItems($page, $limit)
     {
         $offset = $this->getOffset($page, $limit);
@@ -219,6 +227,41 @@ $depot = new UserDepot;
 $item = $depot->get(1, 10);
 
 print_r($item->toArray());
+```
+
+Each item from the `Result` class can also be parsed manually using the `parseRow` class:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\User;
+use Acme\Sample\UserReader;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    /**
+     * Returns the parsed item.
+     *
+     * @param \Acme\Sample\User $row
+     *
+     * @return array<string, mixed>
+     */
+    protected function parseRow(User $row)
+    {
+        $data = array('id' => $row->id);
+
+        $data['name'] = $row->name;
+
+        $data['age'] = $row->age + 10;
+
+        return $data;
+    }
+
+    // ...
+}
 ```
 
 ### `update`
@@ -279,7 +322,7 @@ $depot = new UserDepot;
 $depot->delete(99);
 ```
 
-Using this method requires other methods `deleteRow` and `rowExists` to be defined:
+Using the `delete` method requires other methods `deleteRow` and `rowExists` to be defined:
 
 ``` php
 namespace Acme\Depots;

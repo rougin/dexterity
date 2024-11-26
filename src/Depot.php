@@ -18,7 +18,7 @@ class Depot
      */
     public function create($data)
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return array();
     }
@@ -87,7 +87,7 @@ class Depot
      */
     public function update($id, $data)
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return true;
     }
@@ -101,7 +101,7 @@ class Depot
      */
     protected function deleteRow($id)
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return true;
     }
@@ -116,7 +116,7 @@ class Depot
      */
     protected function findRow($id)
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return array();
     }
@@ -131,7 +131,7 @@ class Depot
      */
     protected function getItems($page, $limit)
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return array();
     }
@@ -156,7 +156,7 @@ class Depot
      */
     protected function getTotal()
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return 0;
     }
@@ -170,8 +170,6 @@ class Depot
      */
     protected function parseRow($row)
     {
-        // TODO: To be define by user
-
         return $row;
     }
 
@@ -184,8 +182,21 @@ class Depot
      */
     protected function rowExists($id)
     {
-        // TODO: To be define by user
+        $this->throwError(__METHOD__);
 
         return true;
+    }
+
+    /**
+     * @param string $method
+     *
+     * @return void
+     * @throws \LogicException
+     */
+    private function throwError($method)
+    {
+        $text = 'The "[METHOD]" method must be overwriten in the concrete Depot class.';
+
+        throw new \LogicException(str_replace('[METHOD]', $method, $text));
     }
 }
