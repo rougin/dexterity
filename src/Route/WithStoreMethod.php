@@ -14,6 +14,8 @@ use Rougin\Dexterity\Message\HttpResponse;
 trait WithStoreMethod
 {
     /**
+     * Creates a new item.
+     *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -32,6 +34,8 @@ trait WithStoreMethod
     }
 
     /**
+     * Returns a response if the validation failed.
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidStore()
@@ -40,6 +44,8 @@ trait WithStoreMethod
     }
 
     /**
+     * Checks if it is allowed to create a new item.
+     *
      * @param array<string, mixed> $parsed
      *
      * @return boolean
@@ -50,6 +56,8 @@ trait WithStoreMethod
     }
 
     /**
+     * Executes the logic for creating a new item.
+     *
      * @param array<string, mixed> $parsed
      *
      * @return \Psr\Http\Message\ResponseInterface

@@ -14,6 +14,8 @@ use Rougin\Dexterity\Message\HttpResponse;
 trait WithDeleteMethod
 {
     /**
+     * Deletes the specified item.
+     *
      * @param integer                                  $id
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
@@ -21,7 +23,7 @@ trait WithDeleteMethod
      */
     public function delete($id, ServerRequestInterface $request)
     {
-        if (! $this->isDeleteValid())
+        if (! $this->isDeleteValid($id))
         {
             return $this->invalidDelete();
         }
@@ -30,6 +32,8 @@ trait WithDeleteMethod
     }
 
     /**
+     * Returns a response if the validation failed.
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidDelete()
@@ -38,14 +42,20 @@ trait WithDeleteMethod
     }
 
     /**
+     * Checks if the specified item can be deleted.
+     *
+     * @param integer $id
+     *
      * @return boolean
      */
-    protected function isDeleteValid()
+    protected function isDeleteValid($id)
     {
         return true;
     }
 
     /**
+     * Executes the logic for deleting the specified item.
+     *
      * @param integer $id
      *
      * @return \Psr\Http\Message\ResponseInterface

@@ -14,6 +14,8 @@ use Rougin\Dexterity\Message\HttpResponse;
 trait WithIndexMethod
 {
     /**
+     * Returns an array of items.
+     *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -32,6 +34,8 @@ trait WithIndexMethod
     }
 
     /**
+     * Returns a response if the validation failed.
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidIndex()
@@ -40,6 +44,8 @@ trait WithIndexMethod
     }
 
     /**
+     * Checks if the items are allowed to be returned.
+     *
      * @param array<string, mixed> $params
      *
      * @return boolean
@@ -50,6 +56,8 @@ trait WithIndexMethod
     }
 
     /**
+     * Executes the logic for returning an array of items.
+     *
      * @param array<string, mixed> $params
      *
      * @return \Psr\Http\Message\ResponseInterface

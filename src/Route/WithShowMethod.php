@@ -14,6 +14,8 @@ use Rougin\Dexterity\Message\HttpResponse;
 trait WithShowMethod
 {
     /**
+     * Returns the specified item.
+     *
      * @param integer                                  $id
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
@@ -24,7 +26,7 @@ trait WithShowMethod
         /** @var array<string, mixed> */
         $params = $request->getQueryParams();
 
-        if (! $this->isShowValid($params))
+        if (! $this->isShowValid($id, $params))
         {
             return $this->invalidShow();
         }
@@ -33,6 +35,8 @@ trait WithShowMethod
     }
 
     /**
+     * Returns a response if the validation failed.
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidShow()
@@ -41,16 +45,21 @@ trait WithShowMethod
     }
 
     /**
+     * Checks if the specified item is allowed to be returned.
+     *
+     * @param integer $id
      * @param array<string, mixed> $params
      *
      * @return boolean
      */
-    protected function isShowValid($params)
+    protected function isShowValid($id, $params)
     {
         return true;
     }
 
     /**
+     * Executes the logic for returning the specified item.
+     *
      * @param integer              $id
      * @param array<string, mixed> $params
      *

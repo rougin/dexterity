@@ -36,8 +36,6 @@ Using the `Depot` class improves development productivity as it reduces writing 
 > [!NOTE]
 > In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
 
-## `Depot` methods
-
 If a `Depot` class is used, the following methods should be defined depending on its usage:
 
 ### `create` method
@@ -85,6 +83,59 @@ class UserDepot extends Depot
 ```
 
 If the logic for the `create` method is not defined, it will throw a `LogicError`.
+
+### `delete` method
+
+When deleting specified items, the `delete` method can be used from the `Depot` class:
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+
+$depot = new UserDepot;
+
+$depot->delete(99);
+```
+
+Using the `delete` method requires other methods `deleteRow` and `rowExists` to be defined:
+
+``` php
+namespace Acme\Depots;
+
+use Acme\Sample\UserDeleter;
+use Acme\Sample\UserReader;
+use Rougin\Dexterity\Depot;
+
+class UserDepot extends Depot
+{
+    // ...
+
+    /**
+     * Deletes the specified item.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    protected function deleteRow($id)
+    {
+        return UserDeleter::delete($id);
+    }
+
+    /**
+     * Checks if the specified item exists.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    protected function rowExists($id)
+    {
+        return UserReader::exists($id);
+    }
+}
+```
 
 ### `find` method
 
@@ -316,59 +367,6 @@ class UserDepot extends Depot
 
 If the logic for the `update` method is not defined, it will throw a `LogicError`.
 
-### `delete` method
-
-When deleting specified items, the `delete` method can be used from the `Depot` class:
-
-``` php
-// index.php
-
-use Acme\Depots\UserDepot;
-
-$depot = new UserDepot;
-
-$depot->delete(99);
-```
-
-Using the `delete` method requires other methods `deleteRow` and `rowExists` to be defined:
-
-``` php
-namespace Acme\Depots;
-
-use Acme\Sample\UserDeleter;
-use Acme\Sample\UserReader;
-use Rougin\Dexterity\Depot;
-
-class UserDepot extends Depot
-{
-    // ...
-
-    /**
-     * Deletes the specified item.
-     *
-     * @param integer $id
-     *
-     * @return boolean
-     */
-    protected function deleteRow($id)
-    {
-        return UserDeleter::delete($id);
-    }
-
-    /**
-     * Checks if the specified item exists.
-     *
-     * @param integer $id
-     *
-     * @return boolean
-     */
-    protected function rowExists($id)
-    {
-        return UserReader::exists($id);
-    }
-}
-```
-
 ## Using `Route` traits
 
 The `Route` traits in `Dexterity` is similar to the previously discussed `Depot` class. While the `Depot` class conforms to the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete), the `Route` traits closely follows the [RESTful software architecture style](https://en.wikipedia.org/wiki/REST) and uses the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard for standardization of its HTTP responses:
@@ -377,6 +375,8 @@ The `Route` traits in `Dexterity` is similar to the previously discussed `Depot`
 namespace Acme\Routes;
 
 use Acme\Depots\UserDepot;
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithIndexMethod;
 
 class Users
 {
@@ -391,15 +391,9 @@ class Users
 
     protected function setIndexData($params)
     {
-        $limit = $params['limit'];
+        $result = $this->user->get($params['page'], $params['limit']);
 
-        $page = $params['page'];
-
-        $result = $this->user->get($page, $limit);
-
-        $data = $result->toArray();
-
-        return new JsonResponse($data);
+        return new JsonResponse($result->toArray());
     }
 }
 ```
@@ -420,10 +414,447 @@ $request = /** ... */
 $response = $route->index($request);
 ```
 
-Using this approach improves the code structure of HTTP routes as it only requires to use a specific trait and apply its required logic.
+For each `Route` trait contains the following methods for writing their logic:
+
+**is[METHOD]Valid**
+
+This trait method will be triggered if the main method requires to be validated first. If not specified, it always return to `true` by default:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Route\WithIndexMethod;
+
+class Users
+{
+    use WithIndexMethod;
+
+    // ...
+
+    /**
+     * Checks if the items are allowed to be returned.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return boolean
+     */
+    protected function isIndexValid($params)
+    {
+        return true;
+    }
+}
+```
+
+**invalid[METHOD]**
+
+This trait method will be triggered if `is[METHOD]Valid` returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Route\WithIndexMethod;
+
+class Users
+{
+    use WithIndexMethod;
+
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function invalidIndex()
+    {
+        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+    }
+}
+```
+
+**set[METHOD]Data**
+
+This is the main trait method that requires to write its logic based on the specified main method:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithIndexMethod;
+
+class Users
+{
+    use WithIndexMethod;
+
+    // ...
+
+    /**
+     * Executes the logic for returning an array of items.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setIndexData($params)
+    {
+        $result = $this->user->get($params['page'], $params['limit']);
+
+        return new JsonResponse($result->toArray());
+    }
+}
+```
+
+Using this kind of approach improves the code structure of HTTP routes as it only requires to write the logic for each `Route` trait being used (e.g., `WithIndexMethod`).
 
 > [!NOTE]
 > In other PHP frameworks and other guides, `Route` is also known as `Controller`.
+
+### `WithDeleteMethod` trait
+
+The `WithDeleteMethod` trait adds a `delete` method in an HTTP route which can be used for deleting a specified item:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithDeleteMethod;
+
+class Users
+{
+    use WithDeleteMethod;
+
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function invalidDelete()
+    {
+        return new ErrorResponse(HttpResponse::NOT_FOUND);
+    }
+
+    /**
+     * Checks if the specified item can be deleted.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    protected function isDeleteValid($id)
+    {
+        return true;
+    }
+
+    /**
+     * Executes the logic for deleting the specified item.
+     *
+     * @param integer $id
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setDeleteData($id)
+    {
+        $this->user->delete($id);
+
+        return new JsonResponse('Deleted!', 204);
+    }
+}
+```
+
+``` php
+// index.php
+
+// ...
+
+/** @var \Acme\Depots\UserDepot */
+$route = /** ... */;
+
+$response = $route->delete($id);
+```
+
+### `WithIndexMethod` trait
+
+The `WithIndexMethod` trait allows to use the `index` method from an HTTP route:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithIndexMethod;
+
+class Users
+{
+    use WithIndexMethod;
+
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function invalidIndex()
+    {
+        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+    }
+
+    /**
+     * Checks if the items are allowed to be returned.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return boolean
+     */
+    protected function isIndexValid($params)
+    {
+        return true;
+    }
+
+    /**
+     * Executes the logic for returning an array of items.
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setIndexData($params)
+    {
+        $result = $this->user->get($params['page'], $params['limit']);
+
+        return new JsonResponse($result->toArray());
+    }
+}
+```
+
+``` php
+// index.php
+
+// ...
+
+/** @var \Psr\Http\Message\ResponseInterface */
+$request = /** ... */
+
+/** @var \Acme\Depots\UserDepot */
+$route = /** ... */;
+
+$response = $route->index($request);
+```
+
+### `WithShowMethod` trait
+
+This `Route` trait allows to use the `show` method:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithShowMethod;
+
+class Users
+{
+    use WithShowMethod;
+
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function invalidShow()
+    {
+        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+    }
+
+    /**
+     * Checks if the specified item is allowed to be returned.
+     *
+     * @param integer $id
+     * @param array<string, mixed> $params
+     *
+     * @return boolean
+     */
+    protected function isShowValid($id, $params)
+    {
+        return true;
+    }
+
+    /**
+     * Executes the logic for returning the specified item.
+     *
+     * @param integer              $id
+     * @param array<string, mixed> $params
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setShowData($id, $params)
+    {
+        $item = $this->user->find($id);
+
+        return new JsonResponse($item);
+    }
+}
+```
+
+``` php
+// index.php
+
+// ...
+
+/** @var \Psr\Http\Message\ResponseInterface */
+$request = /** ... */
+
+/** @var \Acme\Depots\UserDepot */
+$route = /** ... */;
+
+$response = $route->show(99, $request);
+```
+
+### `WithStoreMethod` trait
+
+This trait enables the specified HTTP route to use the `store` method:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithStoreMethod;
+
+class Users
+{
+    use WithStoreMethod;
+
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function invalidStore()
+    {
+        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+    }
+
+    /**
+     * Checks if it is allowed to create a new item.
+     *
+     * @param array<string, mixed> $parsed
+     *
+     * @return boolean
+     */
+    protected function isStoreValid($parsed)
+    {
+        return true;
+    }
+
+    /**
+     * Executes the logic for creating a new item.
+     *
+     * @param array<string, mixed> $parsed
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setStoreData($parsed)
+    {
+        $this->user->create($parsed);
+
+        return new JsonResponse('Created!', 201);
+    }
+}
+```
+
+``` php
+// index.php
+
+// ...
+
+/** @var \Psr\Http\Message\ResponseInterface */
+$request = /** ... */
+
+/** @var \Acme\Depots\UserDepot */
+$route = /** ... */;
+
+$response = $route->store($request);
+```
+
+### `WithUpdateMethod` trait
+
+The `WithUpdateMethod` trait adds an `update` method to an HTTP route:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Message\JsonResponse;
+use Rougin\Dexterity\Route\WithUpdateMethod;
+
+class Users
+{
+    use WithUpdateMethod;
+
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function invalidUpdate()
+    {
+        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+    }
+
+    /**
+     * Checks if the specified item can be updated.
+     *
+     * @param integer $id
+     * @param array<string, mixed> $parsed
+     *
+     * @return boolean
+     */
+    protected function isUpdateValid($id, $parsed)
+    {
+        return true;
+    }
+
+    /**
+     * Executes the logic for updating the specified item.
+     *
+     * @param integer              $id
+     * @param array<string, mixed> $parsed
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setUpdateData($id, $parsed)
+    {
+        $this->user->update($id, $parsed);
+
+        return new JsonResponse('Updated!', 204);
+    }
+}
+```
+
+``` php
+// index.php
+
+// ...
+
+/** @var \Psr\Http\Message\ResponseInterface */
+$request = /** ... */
+
+/** @var \Acme\Depots\UserDepot */
+$route = /** ... */;
+
+$response = $route->update(99, $request);
+```
 
 ## Changelog
 

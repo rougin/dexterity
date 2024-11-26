@@ -14,6 +14,8 @@ use Rougin\Dexterity\Message\HttpResponse;
 trait WithUpdateMethod
 {
     /**
+     * Updates the specified item.
+     *
      * @param integer                                  $id
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
@@ -24,7 +26,7 @@ trait WithUpdateMethod
         /** @var array<string, mixed> */
         $parsed = $request->getParsedBody();
 
-        if (! $this->isUpdateValid($parsed))
+        if (! $this->isUpdateValid($id, $parsed))
         {
             return $this->invalidUpdate();
         }
@@ -33,6 +35,8 @@ trait WithUpdateMethod
     }
 
     /**
+     * Returns a response if the validation failed.
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidUpdate()
@@ -41,16 +45,21 @@ trait WithUpdateMethod
     }
 
     /**
+     * Checks if the specified item can be updated.
+     *
+     * @param integer $id
      * @param array<string, mixed> $parsed
      *
      * @return boolean
      */
-    protected function isUpdateValid($parsed)
+    protected function isUpdateValid($id, $parsed)
     {
         return true;
     }
 
     /**
+     * Executes the logic for updating the specified item.
+     *
      * @param integer              $id
      * @param array<string, mixed> $parsed
      *
