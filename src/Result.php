@@ -101,7 +101,6 @@ class Result
         {
             if (is_object($item) && is_a($item, $contract))
             {
-                /** @var \Illuminate\Contracts\Support\Arrayable */
                 $object = $item;
 
                 $item = $object->toArray();
