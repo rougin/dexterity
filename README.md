@@ -369,6 +369,62 @@ class UserDepot extends Depot
 }
 ```
 
+## Using `Route` traits
+
+The `Route` traits in `Dexterity` is similar to the previously discussed `Depot` class. While the `Depot` class conforms to the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete), the `Route` traits closely follows the [RESTful software architecture style](https://en.wikipedia.org/wiki/REST) and uses the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard for standardization of its HTTP responses:
+
+``` php
+namespace Acme\Routes;
+
+use Acme\Depots\UserDepot;
+
+class Users
+{
+    use WithIndexMethod;
+
+    protected $user;
+
+    public function __construct(UserDepot $user)
+    {
+        $this->user = $user;
+    }
+
+    protected function setIndexData($params)
+    {
+        $limit = $params['limit'];
+
+        $page = $params['page'];
+
+        $result = $this->user->get($page, $limit);
+
+        $data = $result->toArray();
+
+        return new JsonResponse($data);
+    }
+}
+```
+
+``` php
+// index.php
+
+use Acme\Depots\UserDepot;
+use Acme\Routes\Users;
+
+$depot = new UserDepot;
+
+$route = new Users($depot);
+
+/** @var \Psr\Http\Message\ResponseInterface */
+$request = /** ... */
+
+$response = $route->index($request);
+```
+
+Using this approach improves the code structure of HTTP routes as it only requires to use a specific trait and apply its required logic.
+
+> [!NOTE]
+> In other PHP frameworks and other guides, `Route` is also known as `Controller`.
+
 ## Changelog
 
 Please see [CHANGELOG][link-changelog] for more information what has changed recently.
