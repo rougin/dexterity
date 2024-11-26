@@ -18,7 +18,7 @@ $ composer require rougin/dexterity
 
 ## Using `Depot`
 
-The `Depot` class is a abstract class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
+The `Depot` class is an abstract class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
 
 ``` php
 namespace Acme\Depots;
@@ -31,7 +31,11 @@ class UserDepot extends Depot
 }
 ```
 
-If used, the specified methods may be defined depending on the usage from the `Depot`:
+Using the `Depot` class improves development productivity as it reduces writing of code relating to CRUD operations. As it is also designed to be extensible, it can be used freely without the required methods.
+
+## Methods of `Depot`
+
+If a `Depot` class is used, the following methods should be defined depending on its usage:
 
 ### `create`
 
