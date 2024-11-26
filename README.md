@@ -18,7 +18,7 @@ $ composer require rougin/dexterity
 
 ## Using `Depot`
 
-The `Depot` class is an abstract class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
+The `Depot` class is a special PHP class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
 
 ``` php
 namespace Acme\Depots;
@@ -86,7 +86,7 @@ class UserDepot extends Depot
 
 If the logic for the `create` method is not defined, it will throw a `LogicError`.
 
-### `find`
+### `find` method
 
 The `find` method is one of the CRUD operations that tries to find an item based on the given unique identifier (e.g., `id`):
 
@@ -137,7 +137,7 @@ class UserDepot extends Depot
 
 If the specified identifier does not exists, it should throw an `UnexpectedValueException`.
 
-### `get`
+### `get` method
 
 One of the methods of `Depot` that returns an array of items based on the specified page number and its rows to be shown per page:
 
@@ -189,7 +189,7 @@ class UserDepot extends Depot
 }
 ```
 
-If the logic requires an offset instead of a page number, the `getOffset` method from `Depot` can be used:
+If the logic requires an offset instead of a page number, the `getOffset` method from `Depot` can be used to compute the required offset value:
 
 ``` php
 namespace Acme\Depots;
@@ -213,7 +213,7 @@ class UserDepot extends Depot
     {
         $offset = $this->getOffset($page, $limit);
 
-        return UserReader::withOffset($offset, $limit);
+        return UserReader::items($offset, $limit);
     }
 
     // ...
@@ -270,9 +270,9 @@ class UserDepot extends Depot
 }
 ```
 
-### `update`
+### `update` method
 
-The `Depot` class also provide a method to update details of the specified item using `update`:
+The `update` method is used to update details of the specified item:
 
 ``` php
 // index.php
@@ -314,7 +314,9 @@ class UserDepot extends Depot
 }
 ```
 
-### `delete`
+If the logic for the `update` method is not defined, it will throw a `LogicError`.
+
+### `delete` method
 
 When deleting specified items, the `delete` method can be used from the `Depot` class:
 
