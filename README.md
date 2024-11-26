@@ -33,13 +33,16 @@ class UserDepot extends Depot
 
 Using the `Depot` class improves development productivity as it reduces writing of code relating to CRUD operations. As it is also designed to be extensible, it can be used freely without the required methods.
 
-## Methods of `Depot`
+> [!NOTE]
+> In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
+
+## `Depot` methods
 
 If a `Depot` class is used, the following methods should be defined depending on its usage:
 
 ### `create`
 
-A method that will be used for creating an item based on the provided payload:
+The `create` method will be used for creating an item based on the provided payload:
 
 ``` php
 // index.php
@@ -55,7 +58,7 @@ $data = /** ... */;
 $item = $depot->create($data);
 ```
 
-If the said method is being called, its logic must be defined from the `Depot` class:
+If the specified method is being called, its logic must be defined from the `Depot` class:
 
 ``` php
 namespace Acme\Depots;
@@ -80,6 +83,8 @@ class UserDepot extends Depot
     // ...
 }
 ```
+
+If the logic for the `create` method is not defined, it will throw a `LogicError`.
 
 ### `find`
 
@@ -131,9 +136,6 @@ class UserDepot extends Depot
 ```
 
 If the specified identifier does not exists, it should throw an `UnexpectedValueException`.
-
-> [!NOTE]
-> In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
 
 ### `get`
 
