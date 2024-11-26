@@ -82,7 +82,7 @@ class UserDepot extends Depot
 }
 ```
 
-If the logic for the `create` method is not defined, it will throw a `LogicError`.
+If the required logic for the `create` method is not defined, it will throw a `LogicError`.
 
 ### `delete` method
 
@@ -98,7 +98,7 @@ $depot = new UserDepot;
 $depot->delete(99);
 ```
 
-Using the `delete` method requires other methods `deleteRow` and `rowExists` to be defined:
+Using the `delete` method also requires other methods `deleteRow` and `rowExists` to be defined:
 
 ``` php
 namespace Acme\Depots;
@@ -136,6 +136,8 @@ class UserDepot extends Depot
     }
 }
 ```
+
+If the required logic for the `delete` method is not defined, a `LogicError` will be thrown.
 
 ### `find` method
 
@@ -186,7 +188,7 @@ class UserDepot extends Depot
 }
 ```
 
-If the specified identifier does not exists, it should throw an `UnexpectedValueException`.
+If the specified identifier does not exists, it should throw an `UnexpectedValueException`. Likewise, if the required logic for the `find` method is not defined, it will throw a `LogicError`.
 
 ### `get` method
 
@@ -240,7 +242,7 @@ class UserDepot extends Depot
 }
 ```
 
-If the logic requires an offset instead of a page number, the `getOffset` method from `Depot` can be used to compute the required offset value:
+If the logic requires an offset instead of a page number, the `getOffset` method from `Depot` can be used to compute the said offset value:
 
 ``` php
 namespace Acme\Depots;
@@ -271,7 +273,7 @@ class UserDepot extends Depot
 }
 ```
 
-Using the `get` method returns a `Result` class, which can be used to for handling the result from the `Depot`:
+Using the `get` method returns a `Result` class, which can be used for handling the result from the `Depot`:
 
 ``` php
 // index.php
@@ -321,6 +323,8 @@ class UserDepot extends Depot
 }
 ```
 
+If the required logic for the `get` method is not defined, a `LogicError` will be thrown.
+
 ### `update` method
 
 The `update` method is used to update details of the specified item:
@@ -338,7 +342,7 @@ $data = /** ... */;
 $depot->update(99, $data);
 ```
 
-When using the `update` method, its logic must also be defined:
+When using the `update` method, its required logic must also be defined:
 
 ``` php
 namespace Acme\Depots;
@@ -416,9 +420,9 @@ $response = $route->index($request);
 
 For each `Route` trait contains the following methods for writing their logic:
 
-**is[METHOD]Valid**
+**`is[METHOD]Valid`**
 
-This trait method will be triggered if the main method requires to be validated first. If not specified, it always return to `true` by default:
+This trait method will be triggered if `[METHOD]` requires to be validated first. If not specified, it always return to `true` by default:
 
 ``` php
 namespace Acme\Routes;
@@ -445,9 +449,9 @@ class Users
 }
 ```
 
-**invalid[METHOD]**
+**`invalid[METHOD]`**
 
-This trait method will be triggered if `is[METHOD]Valid` returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
+This trait method will be triggered if the `is[METHOD]Valid` trait method returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
 
 ``` php
 namespace Acme\Routes;
@@ -473,9 +477,9 @@ class Users
 }
 ```
 
-**set[METHOD]Data**
+**`set[METHOD]Data`**
 
-This is the main trait method that requires to write its logic based on the specified main method:
+This is the main trait method that requires to write its logic based on `[METHOD]`:
 
 ``` php
 namespace Acme\Routes;
@@ -578,7 +582,7 @@ $response = $route->delete($id);
 
 ### `WithIndexMethod` trait
 
-The `WithIndexMethod` trait allows to use the `index` method from an HTTP route:
+The `WithIndexMethod` trait allows to use the `index` method from an HTTP route. The specified method should return an array of items as its HTTP response:
 
 ``` php
 namespace Acme\Routes;
@@ -647,7 +651,7 @@ $response = $route->index($request);
 
 ### `WithShowMethod` trait
 
-This `Route` trait allows to use the `show` method:
+This `Route` trait allows to use the `show` method which returns an HTTP response for the specified item:
 
 ``` php
 namespace Acme\Routes;
@@ -718,7 +722,7 @@ $response = $route->show(99, $request);
 
 ### `WithStoreMethod` trait
 
-This trait enables the specified HTTP route to use the `store` method:
+This trait enables the specified HTTP route to use the `store` method. The specified method should be responsible for creating new items to the specified storage:
 
 ``` php
 namespace Acme\Routes;
@@ -787,7 +791,7 @@ $response = $route->store($request);
 
 ### `WithUpdateMethod` trait
 
-The `WithUpdateMethod` trait adds an `update` method to an HTTP route:
+The `WithUpdateMethod` trait adds an `update` method to an HTTP route which updates the details of the specified item:
 
 ``` php
 namespace Acme\Routes;
