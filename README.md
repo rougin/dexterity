@@ -40,7 +40,7 @@ Using the `Depot` class improves development productivity as it reduces writing 
 
 If a `Depot` class is used, the following methods should be defined depending on its usage:
 
-### `create`
+### `create` method
 
 The `create` method will be used for creating an item based on the provided payload:
 
