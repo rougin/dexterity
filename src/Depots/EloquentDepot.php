@@ -111,6 +111,6 @@ class EloquentDepot extends Depot
         /** @phpstan-ignore-next-line */
         $model = $model->where('id', $id);
 
-        return $model->first() !== null;
+        return $model->exists();
     }
 }

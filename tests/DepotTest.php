@@ -28,6 +28,8 @@ class DepotTest extends Testcase
     }
 
     /**
+     * @depends test_items_by_offset
+     *
      * @return integer
      */
     public function test_create_new_item()
