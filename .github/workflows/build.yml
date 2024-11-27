@@ -78,11 +78,11 @@ jobs:
 
     - name: Install Composer packages for PHP 8.2
       if: ${{ matrix.php-versions == '8.2' }}
-      run: composer require illuminate/database --no-plugins --dev
+      run: composer require laravel/serializable-closure illuminate/database --no-plugins --dev
 
     - name: Install Composer packages for PHP 8.3
       if: ${{ matrix.php-versions == '8.3' }}
-      run: composer require illuminate/database --no-plugins --dev
+      run: composer require laravel/serializable-closure illuminate/database --no-plugins --dev
 
     - name: Run test suite
       run: vendor/bin/phpunit --coverage-clover=coverage.clover
