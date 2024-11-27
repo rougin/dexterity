@@ -47,7 +47,7 @@ trait WithUpdateMethod
     /**
      * Checks if the specified item can be updated.
      *
-     * @param integer $id
+     * @param integer              $id
      * @param array<string, mixed> $parsed
      *
      * @return boolean

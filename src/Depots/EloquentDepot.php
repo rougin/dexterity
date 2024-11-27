@@ -89,6 +89,16 @@ class EloquentDepot extends Depot
     }
 
     /**
+     * Returns the total number of items.
+     *
+     * @return integer
+     */
+    protected function getTotal()
+    {
+        return $this->model->count();
+    }
+
+    /**
      * Checks if the specified item exists.
      *
      * @param integer $id

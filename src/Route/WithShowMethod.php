@@ -47,7 +47,7 @@ trait WithShowMethod
     /**
      * Checks if the specified item is allowed to be returned.
      *
-     * @param integer $id
+     * @param integer              $id
      * @param array<string, mixed> $params
      *
      * @return boolean
