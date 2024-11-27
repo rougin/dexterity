@@ -18,9 +18,9 @@ class Depot
      */
     public function create($data)
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return array();
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**
@@ -32,12 +32,7 @@ class Depot
      */
     public function delete($id)
     {
-        if (! $this->rowExists($id))
-        {
-            return false;
-        }
-
-        return $this->deleteRow($id);
+        return $this->rowExists($id) ? $this->deleteRow($id) : false;
     }
 
     /**
@@ -87,9 +82,9 @@ class Depot
      */
     public function update($id, $data)
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return true;
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**
@@ -101,9 +96,9 @@ class Depot
      */
     protected function deleteRow($id)
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return true;
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**
@@ -116,9 +111,9 @@ class Depot
      */
     protected function findRow($id)
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return array();
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**
@@ -131,9 +126,9 @@ class Depot
      */
     protected function getItems($page, $limit)
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return array();
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**
@@ -156,9 +151,9 @@ class Depot
      */
     protected function getTotal()
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return 0;
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**
@@ -182,23 +177,8 @@ class Depot
      */
     protected function rowExists($id)
     {
-        $this->throwError(__METHOD__);
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
-        return true;
-    }
-
-    /**
-     * @param string $method
-     *
-     * @return void
-     * @throws \LogicException
-     */
-    private function throwError($method)
-    {
-        $method = str_replace('Rougin\Dexterity\Depot::', '', $method);
-
-        $text = 'The "[METHOD]" method must be overwriten in the concrete Depot class.';
-
-        throw new \LogicException(str_replace('[METHOD]', $method, $text));
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 }

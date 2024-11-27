@@ -64,6 +64,8 @@ trait WithIndexMethod
      */
     protected function setIndexData($params)
     {
-        return new HttpResponse;
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
+
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 }

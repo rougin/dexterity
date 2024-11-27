@@ -2,6 +2,7 @@
 
 namespace Rougin\Dexterity;
 
+use Rougin\Dexterity\Fixture\Depots\ResuDepot;
 use Rougin\Dexterity\Fixture\Depots\UserDepot;
 use Rougin\Dexterity\Fixture\Models\User;
 
@@ -68,10 +69,12 @@ class DepotTest extends Testcase
     {
         $expected = 'Dexterity';
 
-        $result = $this->depot->get(4, 1)->toArray();
+        $depot = new ResuDepot(new User);
+
+        $result = $depot->get(4, 1);
 
         /** @var array<string, string>[] */
-        $items = $result['items'];
+        $items = $result->itemsAsArray();
 
         $actual = $items[0]['name'];
 
