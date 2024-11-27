@@ -125,7 +125,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->show($id, $request);
 
-        $expected = '{"id":7,"name":"Olleh","email":"hello@roug.in"}';
+        $expected = '{"id":' . $id . ',"name":"Olleh","email":"hello@roug.in"}';
 
         $actual = $response->getBody()->__toString();
 
