@@ -3,6 +3,8 @@
 namespace Rougin\Dexterity;
 
 /**
+ * @codeCoverageIgnore
+ *
  * @package Dexterity
  *
  * @author Rougin Gutib <rougingutib@gmail.com>
@@ -195,6 +197,8 @@ class Depot
      */
     private function throwError($method)
     {
+        $method = str_replace('Rougin\Dexterity\Depot::', '', $method);
+
         $text = 'The "[METHOD]" method must be overwriten in the concrete Depot class.';
 
         throw new \LogicException(str_replace('[METHOD]', $method, $text));
