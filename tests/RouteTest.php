@@ -39,7 +39,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->index($request);
 
-        $expected = '{"pages":1,"limit":10,"total":5,"items":[{"id":1,"name":"Slytherin","email":"sltr@roug.in","created_at":"2024-11-27T00:46:59.000000Z","updated_at":null,"deleted_at":null},{"id":2,"name":"Rougin Gutib","email":"me@roug.in","created_at":"2024-11-27T00:46:59.000000Z","updated_at":null,"deleted_at":null},{"id":3,"name":"Authsum","email":"atsm@roug.in","created_at":"2024-11-27T00:46:59.000000Z","updated_at":null,"deleted_at":null},{"id":4,"name":"Dexterity","email":"dxtr@roug.in","created_at":"2024-11-27T00:46:59.000000Z","updated_at":null,"deleted_at":null},{"id":5,"name":"Combustor","email":"cbtr@roug.in","created_at":"2024-11-27T00:46:59.000000Z","updated_at":null,"deleted_at":null}]}';
+        $expected = '{"pages":1,"limit":10,"total":5,"items":[{"id":1,"name":"Slytherin","email":"sltr@roug.in"},{"id":2,"name":"Rougin Gutib","email":"me@roug.in"},{"id":3,"name":"Authsum","email":"atsm@roug.in"},{"id":4,"name":"Dexterity","email":"dxtr@roug.in"},{"id":5,"name":"Combustor","email":"cbtr@roug.in"}]}';
 
         $actual = $response->getBody()->__toString();
 

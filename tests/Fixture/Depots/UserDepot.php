@@ -19,4 +19,20 @@ class UserDepot extends EloquentDepot
     {
         $this->model = $user;
     }
+
+    /**
+     * @param \Rougin\Dexterity\Fixture\Models\User $row
+     *
+     * @return array<string, mixed>
+     */
+    protected function parseRow($row)
+    {
+        $data = array('id' => $row->id);
+
+        $data['name'] = $row->name;
+
+        $data['email'] = $row->email;
+
+        return $data;
+    }
 }

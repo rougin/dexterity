@@ -39,10 +39,7 @@ class EloquentDepot extends Depot
      */
     public function update($id, $data)
     {
-        /** @var \Illuminate\Database\Eloquent\Model */
-        $model = $this->find($id);
-
-        return $model->update($data);
+        return $this->findRow($id)->update($data);
     }
 
     /**

@@ -89,12 +89,12 @@ class DepotTest extends Testcase
 
         $this->depot->update($id, $payload);
 
-        /** @var \Rougin\Dexterity\Fixture\Models\User */
+        /** @var array<string, mixed> */
         $result = $this->depot->find($id);
 
         $expected = $payload['name'];
 
-        $actual = $result->name;
+        $actual = $result['name'];
 
         $this->assertEquals($expected, $actual);
 
