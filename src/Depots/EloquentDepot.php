@@ -65,8 +65,17 @@ class EloquentDepot extends Depot
      */
     protected function findRow($id)
     {
-        /** @phpstan-ignore-next-line */
-        return $this->model->findOrFail($id);
+        try
+        {
+            /** @phpstan-ignore-next-line */
+            return $this->model->findOrFail($id);
+        }
+        catch (\Exception $e)
+        {
+            $text = $e->getMessage();
+
+            throw new \UnexpectedValueException($text);
+        }
     }
 
     /**

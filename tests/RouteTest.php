@@ -31,6 +31,24 @@ class RouteTest extends Testcase
     }
 
     /**
+     * @depends test_update_method
+     *
+     * @param integer $id
+     *
+     * @return void
+     */
+    public function test_delete_method($id)
+    {
+        $this->doSetExpectedException('UnexpectedValueException');
+
+        $request = $this->setRequest(array());
+
+        $this->route->delete($id, $request);
+
+        $this->route->show($id, $request);
+    }
+
+    /**
      * @return void
      */
     public function test_index_method()
@@ -88,5 +106,31 @@ class RouteTest extends Testcase
 
         /** @var integer */
         return json_decode($id, true);
+    }
+
+    /**
+     * @depends test_store_method
+     *
+     * @param integer $id
+     *
+     * @return integer
+     */
+    public function test_update_method($id)
+    {
+        $payload = array('name' => 'Olleh');
+
+        $request = $this->setRequest($payload, true);
+
+        $this->route->update($id, $request);
+
+        $response = $this->route->show($id, $request);
+
+        $expected = '{"id":7,"name":"Olleh","email":"hello@roug.in"}';
+
+        $actual = $response->getBody()->__toString();
+
+        $this->assertEquals($expected, $actual);
+
+        return $id;
     }
 }

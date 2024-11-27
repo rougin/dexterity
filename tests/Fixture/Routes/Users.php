@@ -37,6 +37,20 @@ class Users
     }
 
     /**
+     * Executes the logic for deleting the specified item.
+     *
+     * @param integer $id
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setDeleteData($id)
+    {
+        $this->user->delete($id);
+
+        return new JsonResponse('Deleted!', 204);
+    }
+
+    /**
      * @param array<string, mixed> $params
      *
      * @return \Psr\Http\Message\ResponseInterface
@@ -79,5 +93,20 @@ class Users
         $item = $this->user->create($parsed);
 
         return new JsonResponse($item->id, 201);
+    }
+
+    /**
+     * Executes the logic for updating the specified item.
+     *
+     * @param integer              $id
+     * @param array<string, mixed> $parsed
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setUpdateData($id, $parsed)
+    {
+        $this->user->update($id, $parsed);
+
+        return new JsonResponse('Updated!', 204);
     }
 }
