@@ -49,4 +49,35 @@ class Users
 
         return new JsonResponse($data);
     }
+
+    /**
+     * Executes the logic for returning the specified item.
+     *
+     * @param integer              $id
+     * @param array<string, mixed> $params
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setShowData($id, $params)
+    {
+        /** @var array<string, mixed> */
+        $item = $this->user->find($id);
+
+        return new JsonResponse($item);
+    }
+
+    /**
+     * Executes the logic for creating a new item.
+     *
+     * @param array<string, mixed> $parsed
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function setStoreData($parsed)
+    {
+        /** @var \Rougin\Dexterity\Fixture\Models\User */
+        $item = $this->user->create($parsed);
+
+        return new JsonResponse($item->id, 201);
+    }
 }

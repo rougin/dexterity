@@ -35,7 +35,7 @@ class RouteTest extends Testcase
      */
     public function test_index_method()
     {
-        $request = $this->setRequest('GET', '/');
+        $request = $this->setRequest(array());
 
         $response = $this->route->index($request);
 
@@ -44,5 +44,49 @@ class RouteTest extends Testcase
         $actual = $response->getBody()->__toString();
 
         $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @depends test_index_method
+     *
+     * @return void
+     */
+    public function test_show_method()
+    {
+        $request = $this->setRequest(array());
+
+        $response = $this->route->show(4, $request);
+
+        $expected = '{"id":4,"name":"Dexterity","email":"dxtr@roug.in"}';
+
+        $actual = $response->getBody()->__toString();
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @depends test_show_method
+     *
+     * @return integer
+     */
+    public function test_store_method()
+    {
+        $payload = array('name' => 'Hello');
+        $payload['email'] = 'hello@roug.in';
+
+        $request = $this->setRequest($payload, true);
+
+        $response = $this->route->store($request);
+
+        $expected = 201;
+
+        $actual = $response->getStatusCode();
+
+        $this->assertEquals($expected, $actual);
+
+        $id = $response->getBody()->__toString();
+
+        /** @var integer */
+        return json_decode($id, true);
     }
 }

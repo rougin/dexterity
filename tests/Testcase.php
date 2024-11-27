@@ -73,20 +73,34 @@ class Testcase extends Legacy
     }
 
     /**
-     * @param string $method
-     * @param string $uri
+     * @param array<string, mixed> $data
+     * @param boolean              $parsed
      *
      * @return \Rougin\Slytherin\Http\ServerRequest
      */
-    protected function setRequest($method, $uri)
+    protected function setRequest($data = array(), $parsed = false)
     {
         $server = array();
 
-        $server['REQUEST_METHOD'] = $method;
-        $server['REQUEST_URI'] = $uri;
+        $server['REQUEST_METHOD'] = 'GET';
+        $server['REQUEST_URI'] = '/';
         $server['SERVER_NAME'] = 'localhost';
         $server['SERVER_PORT'] = '8000';
 
-        return new ServerRequest($server);
+        $request = new ServerRequest($server);
+
+        if ($parsed)
+        {
+            $request = $request->withParsedBody($data);
+        }
+        else
+        {
+            /** @var array<string, string> */
+            $params = $data;
+
+            $request = $request->withQueryParams($params);
+        }
+
+        return $request;
     }
 }
