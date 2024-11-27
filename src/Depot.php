@@ -3,8 +3,6 @@
 namespace Rougin\Dexterity;
 
 /**
- * @codeCoverageIgnore
- *
  * @package Dexterity
  *
  * @author Rougin Gutib <rougingutib@gmail.com>

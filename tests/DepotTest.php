@@ -2,7 +2,6 @@
 
 namespace Rougin\Dexterity;
 
-use Illuminate\Database\Capsule\Manager;
 use Rougin\Dexterity\Fixture\Depots\UserDepot;
 use Rougin\Dexterity\Fixture\Models\User;
 
@@ -23,7 +22,7 @@ class DepotTest extends Testcase
      */
     public function doSetUp()
     {
-        $this->loadModel();
+        $this->loadEloquent();
 
         $this->depot = new UserDepot(new User);
     }
@@ -100,25 +99,5 @@ class DepotTest extends Testcase
         $this->assertEquals($expected, $actual);
 
         return $id;
-    }
-
-    /**
-     * @return void
-     */
-    protected function loadModel()
-    {
-        $root = __DIR__ . '/Fixture';
-
-        $config = array('driver' => 'sqlite');
-        $path = $root . '/Storage/dxtr.s3db';
-        $config['database'] = (string) $path;
-
-        $capsule = new Manager;
-
-        $capsule->addConnection($config);
-
-        $capsule->setAsGlobal();
-
-        $capsule->bootEloquent();
     }
 }
