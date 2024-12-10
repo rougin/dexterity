@@ -73,6 +73,20 @@ class Depot
     }
 
     /**
+     * Checks if the specified item exists.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    public function rowExists($id)
+    {
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
+
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
+    }
+
+    /**
      * Updates the specified item.
      *
      * @param integer              $id
@@ -166,19 +180,5 @@ class Depot
     protected function parseRow($row)
     {
         return $row;
-    }
-
-    /**
-     * Checks if the specified item exists.
-     *
-     * @param integer $id
-     *
-     * @return boolean
-     */
-    protected function rowExists($id)
-    {
-        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
-
-        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 }

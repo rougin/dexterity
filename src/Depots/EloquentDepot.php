@@ -30,6 +30,23 @@ class EloquentDepot extends Depot
     }
 
     /**
+     * Checks if the specified item exists.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    public function rowExists($id)
+    {
+        $model = $this->model;
+
+        /** @phpstan-ignore-next-line */
+        $model = $model->where('id', $id);
+
+        return $model->exists();
+    }
+
+    /**
      * Updates the specified item.
      *
      * @param integer              $id
@@ -104,22 +121,5 @@ class EloquentDepot extends Depot
     protected function getTotal()
     {
         return $this->model->count();
-    }
-
-    /**
-     * Checks if the specified item exists.
-     *
-     * @param integer $id
-     *
-     * @return boolean
-     */
-    protected function rowExists($id)
-    {
-        $model = $this->model;
-
-        /** @phpstan-ignore-next-line */
-        $model = $model->where('id', $id);
-
-        return $model->exists();
     }
 }

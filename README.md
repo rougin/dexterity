@@ -112,6 +112,18 @@ class UserDepot extends Depot
     // ...
 
     /**
+     * Checks if the specified item exists.
+     *
+     * @param integer $id
+     *
+     * @return boolean
+     */
+    public function rowExists($id)
+    {
+        return UserReader::exists($id);
+    }
+
+    /**
      * Deletes the specified item.
      *
      * @param integer $id
@@ -121,18 +133,6 @@ class UserDepot extends Depot
     protected function deleteRow($id)
     {
         return UserDeleter::delete($id);
-    }
-
-    /**
-     * Checks if the specified item exists.
-     *
-     * @param integer $id
-     *
-     * @return boolean
-     */
-    protected function rowExists($id)
-    {
-        return UserReader::exists($id);
     }
 }
 ```

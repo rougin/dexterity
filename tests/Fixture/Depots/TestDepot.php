@@ -12,14 +12,13 @@ use Rougin\Dexterity\Depot;
 class TestDepot extends Depot
 {
     /**
-     * @param integer $page
-     * @param integer $limit
+     * @param integer $id
      *
-     * @return mixed[]
+     * @return boolean
      */
-    protected function getItems($page, $limit)
+    public function rowExists($id)
     {
-        return array();
+        return true;
     }
 
     /**
@@ -34,12 +33,13 @@ class TestDepot extends Depot
     }
 
     /**
-     * @param integer $id
+     * @param integer $page
+     * @param integer $limit
      *
-     * @return boolean
+     * @return mixed[]
      */
-    protected function rowExists($id)
+    protected function getItems($page, $limit)
     {
-        return true;
+        return array();
     }
 }
