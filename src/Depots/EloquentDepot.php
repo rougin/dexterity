@@ -30,6 +30,16 @@ class EloquentDepot extends Depot
     }
 
     /**
+     * Returns the total number of items.
+     *
+     * @return integer
+     */
+    public function getTotal()
+    {
+        return $this->model->count();
+    }
+
+    /**
      * Checks if the specified item exists.
      *
      * @param integer $id
@@ -111,15 +121,5 @@ class EloquentDepot extends Depot
         $offset = $this->getOffset($page, $limit);
 
         return $model->offset($offset)->get();
-    }
-
-    /**
-     * Returns the total number of items.
-     *
-     * @return integer
-     */
-    protected function getTotal()
-    {
-        return $this->model->count();
     }
 }

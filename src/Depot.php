@@ -73,6 +73,18 @@ class Depot
     }
 
     /**
+     * Returns the total number of items.
+     *
+     * @return integer
+     */
+    public function getTotal()
+    {
+        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
+
+        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
+    }
+
+    /**
      * Checks if the specified item exists.
      *
      * @param integer $id
@@ -156,18 +168,6 @@ class Depot
     protected function getOffset($page, $limit)
     {
         return $page === 1 ? 0 : ($page * $limit) - $limit;
-    }
-
-    /**
-     * Returns the total number of items.
-     *
-     * @return integer
-     */
-    protected function getTotal()
-    {
-        $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
-
-        throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
     }
 
     /**

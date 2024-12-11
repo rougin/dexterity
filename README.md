@@ -218,6 +218,16 @@ class UserDepot extends Depot
     // ...
 
     /**
+     * Returns the total number of items.
+     *
+     * @return integer
+     */
+    public function getTotal()
+    {
+        return UserReader::totalRows();
+    }
+
+    /**
      * Returns the items with filters.
      *
      * @param integer $page
@@ -228,16 +238,6 @@ class UserDepot extends Depot
     protected function getItems($page, $limit)
     {
         return UserReader::getByLimit($limit, $page);
-    }
-
-    /**
-     * Returns the total number of items.
-     *
-     * @return integer
-     */
-    protected function getTotal()
-    {
-        return UserReader::totalRows();
     }
 }
 ```
