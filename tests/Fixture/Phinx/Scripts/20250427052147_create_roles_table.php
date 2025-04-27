@@ -7,7 +7,7 @@ use Phinx\Migration\AbstractMigration;
  *
  * @author Rougin Gutib <rougingutib@gmail.com>
  */
-final class CreateUsersTable extends AbstractMigration
+final class CreateRolesTable extends AbstractMigration
 {
     /**
      * @return void
@@ -16,12 +16,13 @@ final class CreateUsersTable extends AbstractMigration
     {
         $properties = array('id' => false, 'primary_key' => array('id'));
 
-        $table = $this->table('users', $properties);
+        $table = $this->table('roles', $properties);
 
         $table
             ->addColumn('id', 'integer', array('limit' => 10, 'identity' => true))
+            ->addColumn('type', 'integer', array('limit' => 1))
+            ->addColumn('slug', 'string', array('limit' => 100))
             ->addColumn('name', 'string', array('limit' => 100))
-            ->addColumn('email', 'string', array('limit' => 100))
             ->addColumn('created_at', 'datetime')
             ->addColumn('updated_at', 'datetime', array('null' => true))
             ->addColumn('deleted_at', 'datetime', array('null' => true))
