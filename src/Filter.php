@@ -15,9 +15,9 @@ class Filter
     protected $items = array();
 
     /**
-     * @var string|null
+     * @var string[]
      */
-    protected $search = null;
+    protected $search = array();
 
     /**
      * @return self
@@ -28,7 +28,7 @@ class Filter
 
         $last = count($keys) - 1;
 
-        $this->search = $keys[$last];
+        $this->search[] = $keys[$last];
 
         return $this;
     }
@@ -87,9 +87,9 @@ class Filter
     }
 
     /**
-     * @return string|null
+     * @return string[]
      */
-    public function getSearchKey()
+    public function getSearchKeys()
     {
         return $this->search;
     }

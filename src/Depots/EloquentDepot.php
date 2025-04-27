@@ -125,25 +125,22 @@ class EloquentDepot extends Depot
             return $model->offset($offset)->get();
         }
 
-        $search = $this->filter->getSearchKey();
+        $search = $this->filter->getSearchKeys();
 
         $items = $this->filter->getData();
 
         foreach ($items as $name => $value)
         {
-            if ($search === $name)
+            if (! in_array($name, $search))
             {
+                $model = $model->where($name, $value);
+
                 continue;
             }
 
-            $model = $model->where($name, $value);
-        }
+            $value = '%' . $items[$name] . '%';
 
-        if ($search)
-        {
-            $value = '%' . $items[$search] . '%';
-
-            $model->where($search, 'like', $value);
+            $model->orWhere($name, 'like', $value);
         }
 
         return $model->offset($offset)->get();
