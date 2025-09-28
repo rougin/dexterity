@@ -33,4 +33,18 @@ class User extends Model
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function asRow()
+    {
+        $row = array('id' => $this->id);
+
+        $row['name'] = $this->name;
+
+        $row['email'] = $this->email;
+
+        return $row;
+    }
 }

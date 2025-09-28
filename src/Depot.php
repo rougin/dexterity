@@ -50,7 +50,7 @@ class Depot
      */
     public function find($id)
     {
-        return $this->parseRow($this->findRow($id));
+        return $this->findRow($id);
     }
 
     /**
