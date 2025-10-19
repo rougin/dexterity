@@ -18,7 +18,7 @@ $ composer require rougin/dexterity
 
 ## Using `Depot`
 
-The `Depot` class is a special PHP class which provides methods related to CRUD operations (e.g., `create`, `delete`, `find`, `update`):
+The `Depot` class is a specialized PHP class that provides methods for common CRUD (Create, Read, Update, Delete) operations, such as `create`, `delete`, `find`, and `update`.
 
 ``` php
 namespace Acme\Depots;
@@ -31,16 +31,16 @@ class UserDepot extends Depot
 }
 ```
 
-Using the `Depot` class improves development productivity as it reduces writing of code relating to CRUD operations. As it is also designed to be extensible, it can be used freely without the required methods.
+Utilizing the `Depot` class enhances development productivity by minimizing the need to write repetitive CRUD operation code. Its extensible design allows for flexible use, even without all methods being strictly required.
 
 > [!NOTE]
-> In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
+> In other PHP frameworks and guides, `Depot` is also recognized as a `Repository` within the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
 
-If a `Depot` class is used, the following methods should be defined depending on its usage:
+When a `Depot` class is implemented, specific methods must be defined based on its intended usage:
 
 ### `create` method
 
-The `create` method will be used for creating an item based on the provided payload:
+The `create` method facilitates the creation of a new item based on a provided payload:
 
 ``` php
 // index.php
@@ -56,7 +56,7 @@ $data = /** ... */;
 $item = $depot->create($data);
 ```
 
-If the specified method is being called, its logic must be defined from the `Depot` class:
+When this method is invoked, its underlying logic must be explicitly defined within the `Depot` class:
 
 ``` php
 namespace Acme\Depots;
@@ -82,11 +82,11 @@ class UserDepot extends Depot
 }
 ```
 
-If the required logic for the `create` method is not defined, it will throw a `LogicError`.
+Failure to define the required logic for the `create` method will result in a `LogicError`.
 
 ### `delete` method
 
-When deleting specified items, the `delete` method can be used from the `Depot` class:
+The `delete` method within the `Depot` class can be utilized for removing specified items:
 
 ``` php
 // index.php
@@ -98,7 +98,7 @@ $depot = new UserDepot;
 $depot->delete(99);
 ```
 
-Using the `delete` method also requires other methods `deleteRow` and `rowExists` to be defined:
+Successful execution of the `delete` method necessitates the definition of two additional methods: `deleteRow` and `rowExists`:
 
 ``` php
 namespace Acme\Depots;
@@ -137,11 +137,11 @@ class UserDepot extends Depot
 }
 ```
 
-If the required logic for the `delete` method is not defined, a `LogicError` will be thrown.
+If the necessary logic for the `delete` method is not defined, a `LogicError` will be thrown.
 
 ### `find` method
 
-The `find` method is one of the CRUD operations that tries to find an item based on the given unique identifier (e.g., `id`):
+The `find` method, a core CRUD operation, retrieves an item based on its unique identifier (e.g., `id`):
 
 ``` php
 // index.php
@@ -154,7 +154,7 @@ $depot = new UserDepot;
 $item = $depot->find(99);
 ```
 
-To use the `find` method, kindly write its logic in the `findRow` method:
+To enable the `find` method, its specific logic must be implemented within the `findRow` method:
 
 ``` php
 namespace Acme\Depots;
@@ -188,11 +188,11 @@ class UserDepot extends Depot
 }
 ```
 
-If the specified identifier does not exists, it should throw an `UnexpectedValueException`. Likewise, if the required logic for the `find` method is not defined, it will throw a `LogicError`.
+If the specified identifier does not exist, an `UnexpectedValueException` should be thrown. Similarly, a `LogicError` will be thrown if the required logic for the `find` method is not defined.
 
 ### `get` method
 
-One of the methods of `Depot` that returns an array of items based on the specified page number and its rows to be shown per page:
+The `get` method of `Depot` retrieves an array of items, paginated by a specified page number and the number of rows to display per page:
 
 ``` php
 // index.php
@@ -205,7 +205,7 @@ $depot = new UserDepot;
 $item = $depot->get(1, 10);
 ```
 
-To use the `get` method, the methods `getItems` and `getTotal` should be defined:
+To utilize the `get` method, the `getItems` and `getTotal` methods must be defined:
 
 ``` php
 namespace Acme\Depots;
@@ -242,7 +242,7 @@ class UserDepot extends Depot
 }
 ```
 
-If the logic requires an offset instead of a page number, the `getOffset` method from `Depot` can be used to compute the said offset value:
+If the implementation requires an offset instead of a page number, the `getOffset` method from `Depot` can compute the necessary offset value:
 
 ``` php
 namespace Acme\Depots;
@@ -273,7 +273,7 @@ class UserDepot extends Depot
 }
 ```
 
-Using the `get` method returns a `Result` class, which can be used for handling the result from the `Depot`:
+The `get` method returns a `Result` class instance, which is designed for handling the output from the `Depot`:
 
 ``` php
 // index.php
@@ -288,7 +288,7 @@ $item = $depot->get(1, 10);
 print_r($item->toArray());
 ```
 
-Each item from the `Result` class can also be parsed manually using the `parseRow` class:
+Individual items within the `Result` class can also be manually parsed by implementing the `parseRow` method:
 
 ``` php
 namespace Acme\Depots;
@@ -327,7 +327,7 @@ If the required logic for the `get` method is not defined, a `LogicError` will b
 
 ### `update` method
 
-The `update` method is used to update details of the specified item:
+The `update` method is responsible for modifying the details of a specified item:
 
 ``` php
 // index.php
@@ -342,7 +342,7 @@ $data = /** ... */;
 $depot->update(99, $data);
 ```
 
-When using the `update` method, its required logic must also be defined:
+When the `update` method is utilized, its corresponding logic must be explicitly defined:
 
 ``` php
 namespace Acme\Depots;
@@ -369,11 +369,11 @@ class UserDepot extends Depot
 }
 ```
 
-If the logic for the `update` method is not defined, it will throw a `LogicError`.
+Failure to define the logic for the `update` method will result in a `LogicError`.
 
 ## Using `Route` traits
 
-The `Route` traits in `Dexterity` is similar to the previously discussed `Depot` class. While the `Depot` class conforms to the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete), the `Route` traits closely follows the [RESTful software architecture style](https://en.wikipedia.org/wiki/REST) and uses the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard for standardization of its HTTP responses:
+The `Route` traits in `Dexterity` offer functionality similar to the `Depot` class. While `Depot` focuses on CRUD operations, `Route` traits adhere closely to the [RESTful software architecture style](https://en.wikipedia.org/wiki/REST) and leverage the [PSR-7](https://www.php-fig.org/psr/psr-7/) standard for consistent HTTP responses:
 
 ``` php
 namespace Acme\Routes;
@@ -418,11 +418,11 @@ $request = /** ... */
 $response = $route->index($request);
 ```
 
-For each `Route` trait contains the following methods for writing their logic:
+Each `Route` trait includes specific methods for defining its logic:
 
 **`is[METHOD]Valid`**
 
-This trait method will be triggered if `[METHOD]` requires to be validated first. If not specified, it always return to `true` by default:
+This trait method is invoked when `[METHOD]` requires prior validation. If not explicitly defined, it defaults to `true`:
 
 ``` php
 namespace Acme\Routes;
@@ -451,7 +451,7 @@ class Users
 
 **`invalid[METHOD]`**
 
-This trait method will be triggered if the `is[METHOD]Valid` trait method returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
+This trait method is executed if the `is[METHOD]Valid` method returns `false`. It should return an HTTP response with a `4xx` or `5xx` status code:
 
 ``` php
 namespace Acme\Routes;
@@ -479,7 +479,7 @@ class Users
 
 **`set[METHOD]Data`**
 
-This is the main trait method that requires to write its logic based on `[METHOD]`:
+This is the primary trait method where the specific logic for `[METHOD]` is implemented:
 
 ``` php
 namespace Acme\Routes;
@@ -509,14 +509,14 @@ class Users
 }
 ```
 
-Using this kind of approach improves the code structure of HTTP routes as it only requires to write the logic for each `Route` trait being used (e.g., `WithIndexMethod`).
+This approach enhances the code structure of HTTP routes by centralizing the logic for each `Route` trait (e.g., `WithIndexMethod`).
 
 > [!NOTE]
-> In other PHP frameworks and other guides, `Route` is also known as `Controller`.
+> In other PHP frameworks and guides, `Route` is also commonly referred to as a `Controller`.
 
 ### `WithDeleteMethod` trait
 
-The `WithDeleteMethod` trait adds a `delete` method in an HTTP route which can be used for deleting a specified item:
+The `WithDeleteMethod` trait integrates a `delete` method into an HTTP route, enabling the deletion of a specified item:
 
 ``` php
 namespace Acme\Routes;
@@ -582,7 +582,7 @@ $response = $route->delete($id);
 
 ### `WithIndexMethod` trait
 
-The `WithIndexMethod` trait allows to use the `index` method from an HTTP route. The specified method should return an array of items as its HTTP response:
+The `WithIndexMethod` trait enables the use of the `index` method within an HTTP route. This method is expected to return an array of items as its HTTP response:
 
 ``` php
 namespace Acme\Routes;
@@ -651,7 +651,7 @@ $response = $route->index($request);
 
 ### `WithShowMethod` trait
 
-This `Route` trait allows to use the `show` method which returns an HTTP response for the specified item:
+This `Route` trait enables the use of the `show` method, which retrieves and returns an HTTP response for a specified item:
 
 ``` php
 namespace Acme\Routes;
@@ -722,7 +722,7 @@ $response = $route->show(99, $request);
 
 ### `WithStoreMethod` trait
 
-This trait enables the specified HTTP route to use the `store` method. The specified method should be responsible for creating new items to the specified storage:
+This trait enables an HTTP route to utilize the `store` method, which is responsible for creating new items within the specified storage:
 
 ``` php
 namespace Acme\Routes;
@@ -791,7 +791,7 @@ $response = $route->store($request);
 
 ### `WithUpdateMethod` trait
 
-The `WithUpdateMethod` trait adds an `update` method to an HTTP route which updates the details of the specified item:
+The `WithUpdateMethod` trait integrates an `update` method into an HTTP route, which facilitates the modification of a specified item's details:
 
 ``` php
 namespace Acme\Routes;
