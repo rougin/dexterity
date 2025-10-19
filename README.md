@@ -864,23 +864,9 @@ $response = $route->update(99, $request);
 
 Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
-## Testing
+## Contributing
 
-If there is a need to check the source code of `Dexterity` for development purposes (e.g., creating fixes, new features, etc.), kindly clone this repository first to a local machine:
-
-``` bash
-$ git clone https://github.com/rougin/dexterity.git "Sample"
-```
-
-After cloning, use `Composer` to install its required packages:
-
-``` bash
-$ cd Sample
-$ composer update
-```
-
-> [!NOTE]
-> Please see also the [build.yml](https://github.com/rougin/dexterity/blob/master/.github/workflows/build.yml) of `Dexterity` to check any packages that needs to be installed based on the PHP version.
+See [CONTRIBUTING](link-contributing) on how to contribute.
 
 ## License
 
@@ -894,6 +880,7 @@ The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
 [link-build]: https://github.com/rougin/dexterity/actions
 [link-changelog]: https://github.com/rougin/dexterity/blob/master/CHANGELOG.md
+[link-contributing]: https://github.com/rougin/dexterity/blob/master/CONTRIBUTING.md
 [link-contributors]: https://github.com/rougin/dexterity/contributors
 [link-coverage]: https://app.codecov.io/gh/rougin/dexterity
 [link-downloads]: https://packagist.org/packages/rougin/dexterity
