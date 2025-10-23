@@ -2,7 +2,7 @@
 
 namespace Rougin\Dexterity\Error;
 
-use Rougin\Dexterity\Fixture\Routes\Test;
+use Rougin\Dexterity\Fixture\Routes\Tset;
 use Rougin\Dexterity\Testcase;
 
 /**
@@ -13,7 +13,7 @@ use Rougin\Dexterity\Testcase;
 class RouteTest extends Testcase
 {
     /**
-     * @var \Rougin\Dexterity\Fixture\Routes\Test
+     * @var \Rougin\Dexterity\Fixture\Routes\Tset
      */
     protected $route;
 
@@ -22,7 +22,7 @@ class RouteTest extends Testcase
      */
     public function doSetUp()
     {
-        $this->route = new Test;
+        $this->route = new Tset;
     }
 
     /**

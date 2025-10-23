@@ -9,7 +9,7 @@ use Rougin\Dexterity\Route;
  *
  * @author Rougin Gutib <rougingutib@gmail.com>
  */
-class Test extends Route
+class Tset extends Route
 {
     /**
      * @var boolean
