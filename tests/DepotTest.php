@@ -94,8 +94,9 @@ class DepotTest extends Testcase
 
         // Create a filter and add it to the depot ------
         $filter = new Filter;
-        $filter->setAsInt('type', Role::TYPE_USER);
-        $filter->setAsString('name', 'user')->asSearch();
+        $filter->setInt('type', Role::TYPE_USER);
+        $filter->setStr('name', 'user');
+        $filter->withSearch('name');
         $depot->withFilter($filter);
         // ----------------------------------------------
 

@@ -12,70 +12,132 @@ class Filter
     /**
      * @var array<string, mixed>
      */
-    protected $items = array();
+    protected $data = array();
 
     /**
      * @var string[]
      */
-    protected $search = array();
+    protected $keys = array();
 
     /**
-     * @return self
-     */
-    public function asSearch()
-    {
-        $keys = array_keys($this->items);
-
-        $last = count($keys) - 1;
-
-        $this->search[] = $keys[$last];
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
+     * @param string $key
      *
-     * @return integer
+     * @return boolean
      */
-    public function getAsInt($name)
+    public function asBool($key)
     {
-        return (int) $this->getAsIntNull($name);
+        $bool = FILTER_VALIDATE_BOOLEAN;
+
+        $item = $this->getItem($key);
+
+        $item = filter_var($item, $bool);
+
+        return $item === true;
     }
 
     /**
-     * @param string $name
+     * @param string $key
+     *
+     * @return float|null
+     */
+    public function asFloat($key)
+    {
+        $null = FILTER_NULL_ON_FAILURE;
+
+        $int = FILTER_VALIDATE_FLOAT;
+
+        $item = $this->getItem($key);
+
+        $item = filter_var($item, $int, $null);
+
+        return is_float($item) ? $item : null;
+    }
+
+    /**
+     * @param string $key
      *
      * @return integer|null
      */
-    public function getAsIntNull($name)
+    public function asInt($key)
     {
-        $value = $this->getAsStringNull($name);
+        $null = FILTER_NULL_ON_FAILURE;
 
-        return $value ? (int) $value : null;
+        $int = FILTER_VALIDATE_INT;
+
+        $item = $this->getItem($key);
+
+        $item = filter_var($item, $int, $null);
+
+        return is_int($item) ? $item : null;
     }
 
     /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getAsString($name)
-    {
-        return (string) $this->getAsStringNull($name);
-    }
-
-    /**
-     * @param string $name
+     * @param string $key
      *
      * @return string|null
      */
-    public function getAsStringNull($name)
+    public function asStr($key)
     {
-        $exists = array_key_exists($name, $this->items);
+        $item = $this->getItem($key);
 
-        /** @var string|null */
-        return $exists ? $this->items[$name] : null;
+        return is_string($item) ? $item : null;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return float
+     */
+    public function asTrueFloat($key)
+    {
+        $item = $this->asFloat($key);
+
+        if (! is_float($item))
+        {
+            $text = 'Key "' . $key . '" is not an integer';
+
+            throw new \Exception($text);
+        }
+
+        return $item;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return integer
+     */
+    public function asTrueInt($key)
+    {
+        $item = $this->asInt($key);
+
+        if (! is_int($item))
+        {
+            $text = 'Key "' . $key . '" is not an integer';
+
+            throw new \Exception($text);
+        }
+
+        return $item;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    public function asTrueStr($key)
+    {
+        $item = $this->asStr($key);
+
+        if (! is_string($item))
+        {
+            $text = 'Key "' . $key . '" is not a string';
+
+            throw new \Exception($text);
+        }
+
+        return $item;
     }
 
     /**
@@ -83,7 +145,7 @@ class Filter
      */
     public function getData()
     {
-        return $this->items;
+        return $this->data;
     }
 
     /**
@@ -91,7 +153,20 @@ class Filter
      */
     public function getSearchKeys()
     {
-        return $this->search;
+        return $this->keys;
+    }
+
+    /**
+     * @param string  $name
+     * @param boolean $value
+     *
+     * @return self
+     */
+    public function setBool($name, $value)
+    {
+        $this->data[$name] = $value;
+
+        return $this;
     }
 
     /**
@@ -100,9 +175,22 @@ class Filter
      *
      * @return self
      */
-    public function setAsInt($name, $value)
+    public function setInt($name, $value)
     {
-        $this->items[$name] = (int) $value;
+        $this->data[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string  $name
+     * @param float $value
+     *
+     * @return self
+     */
+    public function setFloat($name, $value)
+    {
+        $this->data[$name] = $value;
 
         return $this;
     }
@@ -113,10 +201,39 @@ class Filter
      *
      * @return self
      */
-    public function setAsString($name, $value)
+    public function setStr($name, $value)
     {
-        $this->items[$name] = (string) $value;
+        $this->data[$name] = $value;
 
         return $this;
+    }
+
+    /**
+     * @param string|string[] $keys
+     *
+     * @return self
+     */
+    public function withSearch($keys)
+    {
+        if (is_string($keys))
+        {
+            $keys = array($keys);
+        }
+
+        $this->keys = $keys;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    protected function getItem($key)
+    {
+        $exists = array_key_exists($key, $this->data);
+
+        return $exists ? $this->data[$key] : null;
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Rougin\Dexterity;
 
-use Rougin\Dexterity\Fixture\Models\Role;
-
 /**
  * @package Dexterity
  *
@@ -12,44 +10,27 @@ use Rougin\Dexterity\Fixture\Models\Role;
 class FilterTest extends Testcase
 {
     /**
-     * @var \Rougin\Dexterity\Filter
-     */
-    protected $filter;
-
-    /**
      * @return void
      */
-    public function doSetUp()
+    public function test_bool_with_bool()
     {
-        $this->loadEloquent();
-
         $filter = new Filter;
 
-        $filter->setAsInt('type', Role::TYPE_USER);
+        $filter->setBool('test', false);
 
-        $filter->setAsString('name', 'user')->asSearch();
+        $actual = $filter->asBool('test');
 
-        $this->filter = $filter;
+        $this->assertFalse($actual);
     }
 
     /**
      * @return void
      */
-    public function test_as_integer()
+    public function test_empty_key()
     {
-        $expect = Role::TYPE_USER;
+        $filter = new Filter;
 
-        $actual = $this->filter->getAsInt('type');
-
-        $this->assertEquals($expect, $actual);
-    }
-
-    /**
-     * @return void
-     */
-    public function test_as_integer_null()
-    {
-        $actual = $this->filter->getAsIntNull('sample');
+        $actual = $filter->asInt('test');
 
         $this->assertNull($actual);
     }
@@ -57,22 +38,156 @@ class FilterTest extends Testcase
     /**
      * @return void
      */
-    public function test_as_string()
+    public function test_float_with_float()
     {
-        $expect = 'user';
+        $filter = new Filter;
 
-        $actual = $this->filter->getAsString('name');
+        $filter->setFloat('test', 100.20);
 
-        $this->assertEquals($expect, $actual);
+        $actual = $filter->asFloat('test');
+
+        $this->assertEquals(100.20, $actual);
     }
 
     /**
      * @return void
      */
-    public function test_as_string_null()
+    public function test_float_with_null()
     {
-        $actual = $this->filter->getAsStringNull('sample');
+        $filter = new Filter;
+
+        $actual = $filter->asFloat('test');
 
         $this->assertNull($actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_int_with_int()
+    {
+        $filter = new Filter;
+
+        $filter->setInt('test', 10);
+
+        $actual = $filter->asInt('test');
+
+        $this->assertEquals(10, $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_int_with_null()
+    {
+        $filter = new Filter;
+
+        $actual = $filter->asInt('test');
+
+        $this->assertNull($actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_string_with_null()
+    {
+        $filter = new Filter;
+
+        $actual = $filter->asStr('test');
+
+        $this->assertNull($actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_string_with_string()
+    {
+        $filter = new Filter;
+
+        $filter->setStr('test', '10000');
+
+        $actual = $filter->asStr('test');
+
+        $this->assertEquals('10000', $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_true_float()
+    {
+        $filter = new Filter;
+
+        $filter->setFloat('test', 100.234);
+
+        $actual = $filter->asTrueFloat('test');
+
+        $this->assertEquals(100.234, $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_true_float_with_error()
+    {
+        $filter = new Filter;
+
+        $this->expectException('Exception');
+
+        $filter->asTrueFloat('test');
+    }
+
+    /**
+     * @return void
+     */
+    public function test_true_integer()
+    {
+        $filter = new Filter;
+
+        $filter->setInt('test', 10000);
+
+        $actual = $filter->asTrueInt('test');
+
+        $this->assertEquals(10000, $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_true_integer_with_error()
+    {
+        $filter = new Filter;
+
+        $this->expectException('Exception');
+
+        $filter->asTrueInt('test');
+    }
+
+    /**
+     * @return void
+     */
+    public function test_true_string()
+    {
+        $filter = new Filter;
+
+        $filter->setStr('test', '10000');
+
+        $actual = $filter->asTrueStr('test');
+
+        $this->assertEquals('10000', $actual);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_true_string_with_error()
+    {
+        $filter = new Filter;
+
+        $this->expectException('Exception');
+
+        $filter->asTrueStr('test');
     }
 }
