@@ -134,7 +134,7 @@ class FilterTest extends Testcase
     {
         $filter = new Filter;
 
-        $this->expectException('Exception');
+        $this->doSetExpectedException('Exception');
 
         $filter->asTrueFloat('test');
     }
@@ -160,7 +160,7 @@ class FilterTest extends Testcase
     {
         $filter = new Filter;
 
-        $this->expectException('Exception');
+        $this->doSetExpectedException('Exception');
 
         $filter->asTrueInt('test');
     }
@@ -186,7 +186,7 @@ class FilterTest extends Testcase
     {
         $filter = new Filter;
 
-        $this->expectException('Exception');
+        $this->doSetExpectedException('Exception');
 
         $filter->asTrueStr('test');
     }
