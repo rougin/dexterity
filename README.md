@@ -445,6 +445,32 @@ class Users extends Route
 }
 ```
 
+If all methods shared the same validation check, the `isValid` method can be used instead:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Route;
+
+class Users extends Route
+{
+    // ...
+
+    /**
+     * Checks if the items are allowed to be returned.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return boolean
+     */
+    protected function isValid($data)
+    {
+        return true;
+    }
+}
+```
+
 **`invalid[METHOD]`**
 
 This method will be triggered if the `is[METHOD]Valid` method returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
@@ -465,6 +491,30 @@ class Users extends Route
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidIndex()
+    {
+        return new ErrorResponse(422);
+    }
+}
+```
+
+If all methods shared the same validation error, the `asInvalid` method can be used instead:
+
+``` php
+namespace Acme\Routes;
+
+use Rougin\Dexterity\Message\ErrorResponse;
+use Rougin\Dexterity\Route;
+
+class Users extends Route
+{
+    // ...
+
+    /**
+     * Returns a response if the validation failed.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function asInvalid()
     {
         return new ErrorResponse(422);
     }

@@ -115,11 +115,22 @@ class Route
     /**
      * Returns a response if the validation failed.
      *
+     * @param integer $code
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    protected function asInvalid($code = 422)
+    {
+        return new ErrorResponse($code);
+    }
+
+    /**
+     * Returns a response if the validation failed.
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function invalidDelete()
     {
-        return new ErrorResponse(404);
+        return $this->asInvalid(404);
     }
 
     /**
@@ -129,7 +140,7 @@ class Route
      */
     protected function invalidIndex()
     {
-        return new ErrorResponse(422);
+        return $this->asInvalid();
     }
 
     /**
@@ -139,7 +150,7 @@ class Route
      */
     protected function invalidShow()
     {
-        return new ErrorResponse(404);
+        return $this->asInvalid(404);
     }
 
     /**
@@ -149,7 +160,7 @@ class Route
      */
     protected function invalidStore()
     {
-        return new ErrorResponse(422);
+        return $this->asInvalid();
     }
 
     /**
@@ -159,7 +170,7 @@ class Route
      */
     protected function invalidUpdate()
     {
-        return new ErrorResponse(422);
+        return $this->asInvalid();
     }
 
     /**
@@ -171,7 +182,7 @@ class Route
      */
     protected function isDeleteValid($id)
     {
-        return true;
+        return $this->isValid(array());
     }
 
     /**
@@ -183,7 +194,7 @@ class Route
      */
     protected function isIndexValid($params)
     {
-        return true;
+        return $this->isValid($params);
     }
 
     /**
@@ -196,7 +207,7 @@ class Route
      */
     protected function isShowValid($id, $params)
     {
-        return true;
+        return $this->isValid($params);
     }
 
     /**
@@ -208,7 +219,7 @@ class Route
      */
     protected function isStoreValid($parsed)
     {
-        return true;
+        return $this->isValid($parsed);
     }
 
     /**
@@ -220,6 +231,18 @@ class Route
      * @return boolean
      */
     protected function isUpdateValid($id, $parsed)
+    {
+        return $this->isValid($parsed);
+    }
+
+    /**
+     * Checks if the items are allowed to be returned.
+     *
+     * @param array<string, mixed> $data
+     *
+     * @return boolean
+     */
+    protected function isValid($data)
     {
         return true;
     }
