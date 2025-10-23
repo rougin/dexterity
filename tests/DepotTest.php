@@ -73,24 +73,24 @@ class DepotTest extends Testcase
 
         $expected = array();
 
-        // Create sample roles ------------
-        $row = ['name' => 'Administrator'];
+        // Create sample roles -----------------
+        $row = array('name' => 'Administrator');
         $row['type'] = Role::TYPE_ADMIN;
         $row['slug'] = 'administrator';
         $depot->create($row);
 
-        $row = ['name' => 'Common User'];
+        $row = array('name' => 'Common User');
         $row['type'] = Role::TYPE_USER;
         $row['slug'] = 'common-user';
         $expected[] = $row;
         $depot->create($row);
 
-        $row = ['name' => 'Default User'];
+        $row = array('name' => 'Default User');
         $row['type'] = Role::TYPE_USER;
         $row['slug'] = 'default-user';
         $expected[] = $row;
         $depot->create($row);
-        // -------------------------------
+        // -------------------------------------
 
         // Create a filter and add it to the depot ------
         $filter = new Filter;
