@@ -288,7 +288,7 @@ $item = $depot->get(1, 10);
 print_r($item->toArray());
 ```
 
-Each item from the `Result` class can also be parsed manually using the `parseRow` class:
+Each item from the `Result` class can also be parsed manually using the `asRow` class:
 
 ``` php
 namespace Acme\Depots;
@@ -308,7 +308,7 @@ class UserDepot extends Depot
      *
      * @return array<string, mixed>
      */
-    protected function parseRow(User $row)
+    protected function asRow(User $row)
     {
         $data = array('id' => $row->id);
 

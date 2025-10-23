@@ -25,7 +25,7 @@ class RoleDepot extends EloquentDepot
      *
      * @return array<string, mixed>
      */
-    protected function parseRow($row)
+    protected function asRow($row)
     {
         $data = array();
 

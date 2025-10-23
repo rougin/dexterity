@@ -27,7 +27,7 @@ class UserDepot extends EloquentDepot
      *
      * @return array<string, mixed>
      */
-    protected function parseRow($row)
+    protected function asRow($row)
     {
         // PHP 5.3 - '"id":1' returns '"id":"1"' instead, ---
         // even manually adding "id" to "$casts" property ---

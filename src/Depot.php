@@ -69,7 +69,7 @@ class Depot
 
         foreach ($result as $item)
         {
-            $items[] = $this->parseRow($item);
+            $items[] = $this->asRow($item);
         }
 
         $total = $this->getTotal();
@@ -131,6 +131,18 @@ class Depot
     }
 
     /**
+     * Returns the parsed item.
+     *
+     * @param mixed $row
+     *
+     * @return mixed
+     */
+    protected function asRow($row)
+    {
+        return $row;
+    }
+
+    /**
      * Deletes the specified item.
      *
      * @param integer $id
@@ -185,17 +197,5 @@ class Depot
     protected function getOffset($page, $limit)
     {
         return $page === 1 ? 0 : ($page * $limit) - $limit;
-    }
-
-    /**
-     * Returns the parsed item.
-     *
-     * @param mixed $row
-     *
-     * @return mixed
-     */
-    protected function parseRow($row)
-    {
-        return $row;
     }
 }
