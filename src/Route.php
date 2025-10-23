@@ -116,6 +116,7 @@ class Route
      * Returns a response if the validation failed.
      *
      * @param integer $code
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     protected function asInvalid($code = 422)

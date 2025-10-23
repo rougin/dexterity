@@ -183,8 +183,8 @@ class Filter
     }
 
     /**
-     * @param string  $name
-     * @param float $value
+     * @param string $name
+     * @param float  $value
      *
      * @return self
      */
