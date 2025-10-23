@@ -41,7 +41,10 @@ class User extends Model
      */
     public function asRow()
     {
-        $row = array('id' => $this->id);
+        // PHP 5.3 - '"id":1' returns '"id":"1"' instead, ---
+        // even manually adding "id" to "$casts" property ---
+        $row = array('id' => (int) $this->id);
+        // --------------------------------------------------
 
         $row['name'] = $this->name;
 
