@@ -2,6 +2,8 @@
 
 namespace Rougin\Dexterity;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * @package Dexterity
  *
@@ -31,49 +33,11 @@ class Result
      */
     public function __construct($items, $total, $limit)
     {
-        $this->limit = (int) $limit;
+        $this->limit = $limit;
 
         $this->items = $items;
 
-        $this->total = (int) $total;
-    }
-
-    /**
-     * Returns the result in array format.
-     *
-     * @return array<string, integer|mixed[]>
-     */
-    public function toArray()
-    {
-        $output = array('pages' => 1);
-
-        $limit = $this->limit();
-
-        $total = $this->total();
-
-        $output['limit'] = $limit;
-
-        $output['total'] = $total;
-
-        $output['items'] = $this->itemsAsArray();
-
-        $rounded = ceil($total / $limit);
-
-        $rounded = $rounded ? $rounded : 1;
-
-        $output['pages'] = (int) $rounded;
-
-        return (array) $output;
-    }
-
-    /**
-     * Returns the number of rows per page.
-     *
-     * @return integer
-     */
-    public function limit()
-    {
-        return $this->limit;
+        $this->total = $total;
     }
 
     /**
@@ -87,29 +51,69 @@ class Result
     }
 
     /**
-     * Returns the items in array format, if available.
+     * Returns the result in array format, if available.
      *
      * @return mixed[]
      */
     public function itemsAsArray()
     {
-        $contract = 'Illuminate\Contracts\Support\Arrayable';
-
         $items = array();
 
         foreach ($this->items() as $item)
         {
-            if (is_object($item) && is_a($item, $contract))
+            if (! $item instanceof Arrayable)
             {
-                $object = $item;
+                $items[] = $item;
 
-                $item = $object->toArray();
+                continue;
             }
 
-            $items[] = $item;
+            $items[] = $item->toArray();
         }
 
         return $items;
+    }
+
+    /**
+     * Returns the number of rows per page.
+     *
+     * @return integer
+     */
+    public function limit()
+    {
+        return $this->limit;
+    }
+
+    /**
+     * Returns the result as an associative array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray()
+    {
+        $limit = $this->limit();
+
+        $total = $this->total();
+
+        // Set default pages to "0" or "1" ---
+        $pages = $total === 0 ? 0 : 1;
+
+        $item = array('pages' => $pages);
+        // -----------------------------------
+
+        $item['limit'] = $limit;
+
+        $item['total'] = $total;
+
+        $item['items'] = $this->itemsAsArray();
+
+        $round = ceil($total / $limit);
+
+        $round = $round ? $round : $pages;
+
+        $item['pages'] = floor($round);
+
+        return $item;
     }
 
     /**
