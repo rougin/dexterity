@@ -120,6 +120,29 @@ class EloquentDepot extends Depot
 
         $offset = $this->getOffset($page, $limit);
 
+        if (! $this->filter)
+        {
+            return $model->offset($offset)->get();
+        }
+
+        $search = $this->filter->getSearchKeys();
+
+        $items = $this->filter->getData();
+
+        foreach ($items as $name => $value)
+        {
+            if (! in_array($name, $search))
+            {
+                $model = $model->where($name, $value);
+
+                continue;
+            }
+
+            $value = '%' . $items[$name] . '%';
+
+            $model->orWhere($name, 'like', $value);
+        }
+
         return $model->offset($offset)->get();
     }
 }

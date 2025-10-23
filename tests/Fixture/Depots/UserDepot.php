@@ -6,6 +6,8 @@ use Rougin\Dexterity\Depots\EloquentDepot;
 use Rougin\Dexterity\Fixture\Models\User;
 
 /**
+ * @method \Rougin\Dexterity\Fixture\Models\User find(integer $id)
+ *
  * @package Dexterity
  *
  * @author Rougin Gutib <rougingutib@gmail.com>

@@ -3,7 +3,9 @@
 namespace Rougin\Dexterity;
 
 use Rougin\Dexterity\Fixture\Depots\ResuDepot;
+use Rougin\Dexterity\Fixture\Depots\RoleDepot;
 use Rougin\Dexterity\Fixture\Depots\UserDepot;
+use Rougin\Dexterity\Fixture\Models\Role;
 use Rougin\Dexterity\Fixture\Models\User;
 
 /**
@@ -60,6 +62,46 @@ class DepotTest extends Testcase
     public function test_delete_item($id)
     {
         $this->assertTrue($this->depot->delete($id));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_filter_items()
+    {
+        $depot = new RoleDepot(new Role);
+
+        $expected = array();
+
+        // Create sample roles ------------
+        $row = ['name' => 'Administrator'];
+        $row['type'] = Role::TYPE_ADMIN;
+        $row['slug'] = 'administrator';
+        $depot->create($row);
+
+        $row = ['name' => 'Common User'];
+        $row['type'] = Role::TYPE_USER;
+        $row['slug'] = 'common-user';
+        $expected[] = $row;
+        $depot->create($row);
+
+        $row = ['name' => 'Default User'];
+        $row['type'] = Role::TYPE_USER;
+        $row['slug'] = 'default-user';
+        $expected[] = $row;
+        $depot->create($row);
+        // -------------------------------
+
+        // Create a filter and add it to the depot ------
+        $filter = new Filter;
+        $filter->setAsInt('type', Role::TYPE_USER);
+        $filter->setAsString('name', 'user')->asSearch();
+        $depot->withFilter($filter);
+        // ----------------------------------------------
+
+        $actual = $depot->get(1, 5)->items();
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**

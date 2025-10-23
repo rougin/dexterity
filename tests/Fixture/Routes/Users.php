@@ -64,8 +64,7 @@ class Users extends Route
      */
     protected function setShowData($id, $params)
     {
-        /** @var array<string, mixed> */
-        $item = $this->user->find($id);
+        $item = $this->user->find($id)->asRow();
 
         return new JsonResponse($item);
     }

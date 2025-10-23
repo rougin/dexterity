@@ -26,7 +26,7 @@ class JsonResponse extends Response
 
         $headers = array('Content-Type' => $types);
 
-        parent::__construct($code, null, $headers, '1.1');
+        parent::__construct($code, null, $headers);
 
         $this->data = $data;
     }

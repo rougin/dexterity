@@ -10,6 +10,11 @@ namespace Rougin\Dexterity;
 class Depot
 {
     /**
+     * @var \Rougin\Dexterity\Filter|null
+     */
+    protected $filter = null;
+
+    /**
      * Creates a new item.
      *
      * @param array<string, mixed> $data
@@ -45,7 +50,7 @@ class Depot
      */
     public function find($id)
     {
-        return $this->parseRow($this->findRow($id));
+        return $this->findRow($id);
     }
 
     /**
@@ -111,6 +116,18 @@ class Depot
         $text = 'The "[METHOD]" method must be overwriten in the concrete class.';
 
         throw new \LogicException(str_replace('[METHOD]', __FUNCTION__, $text));
+    }
+
+    /**
+     * @param \Rougin\Dexterity\Filter $filter
+     *
+     * @return self
+     */
+    public function withFilter(Filter $filter)
+    {
+        $this->filter = $filter;
+
+        return $this;
     }
 
     /**
