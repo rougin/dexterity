@@ -61,7 +61,10 @@ class RouteTest extends Testcase
 
         $actual = $response->getBody()->__toString();
 
-        $this->assertEquals($expect, $actual);
+        // PHP 5.3 - '"id":1' returns '"id":"1"' instead, ---
+        // even manually adding "id" to "$casts" property ---
+        $this->assertSame($expect, $actual);
+        // --------------------------------------------------
     }
 
     /**
