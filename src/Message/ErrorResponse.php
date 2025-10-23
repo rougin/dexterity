@@ -11,4 +11,8 @@ use Rougin\Slytherin\Http\Response;
  */
 class ErrorResponse extends Response
 {
+    /**
+     * @var integer
+     */
+    protected $code = 400;
 }

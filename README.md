@@ -36,7 +36,7 @@ Using the `Depot` class improves development productivity as it reduces writing 
 > [!NOTE]
 > In other PHP frameworks and other guides, `Depot` is also known as `Repository` from the [Repository pattern](https://designpatternsphp.readthedocs.io/en/latest/More/Repository/README.html).
 
-If a `Depot` class is used, the following methods should be defined depending on its usage:
+If a `Depot` class is used, the following methods must be defined depending on its usage:
 
 ### `create` method
 
@@ -188,7 +188,7 @@ class UserDepot extends Depot
 }
 ```
 
-If the specified identifier does not exists, it should throw an `UnexpectedValueException`. Likewise, if the required logic for the `find` method is not defined, it will throw a `LogicError`.
+If the specified identifier does not exists, it must throw an `UnexpectedValueException`. Likewise, if the required logic for the `find` method is not defined, it will throw a `LogicError`.
 
 ### `get` method
 
@@ -205,7 +205,7 @@ $depot = new UserDepot;
 $item = $depot->get(1, 10);
 ```
 
-To use the `get` method, the methods `getItems` and `getTotal` should be defined:
+To use the `get` method, the methods `getItems` and `getTotal` must be defined:
 
 ``` php
 namespace Acme\Depots;
@@ -371,21 +371,19 @@ class UserDepot extends Depot
 
 If the logic for the `update` method is not defined, it will throw a `LogicError`.
 
-## Using `Route` traits
+## Using `Route`
 
-The `Route` traits in `Dexterity` is similar to the previously discussed `Depot` class. While the `Depot` class conforms to the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete), the `Route` traits closely follows the [RESTful software architecture style](https://en.wikipedia.org/wiki/REST) and uses the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard for standardization of its HTTP responses:
+The `Route` class in `Dexterity` is similar to the previously discussed `Depot` class. While the `Depot` class conforms to the [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete), the `Route` class closely follows the [RESTful software architecture style](https://en.wikipedia.org/wiki/REST) and uses the [PSR-07](https://www.php-fig.org/psr/psr-7/) standard for standardization of its HTTP responses:
 
 ``` php
 namespace Acme\Routes;
 
 use Acme\Depots\UserDepot;
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithIndexMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithIndexMethod;
-
     protected $user;
 
     public function __construct(UserDepot $user)
@@ -418,21 +416,19 @@ $request = /** ... */
 $response = $route->index($request);
 ```
 
-For each `Route` trait contains the following methods for writing their logic:
+The `Route` class contains the following methods for writing their logic:
 
 **`is[METHOD]Valid`**
 
-This trait method will be triggered if `[METHOD]` requires to be validated first. If not specified, it always return to `true` by default:
+This method will be triggered if `[METHOD]` requires to be validated first. If not specified, it always return to `true` by default:
 
 ``` php
 namespace Acme\Routes;
 
-use Rougin\Dexterity\Route\WithIndexMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithIndexMethod;
-
     // ...
 
     /**
@@ -451,18 +447,16 @@ class Users
 
 **`invalid[METHOD]`**
 
-This trait method will be triggered if the `is[METHOD]Valid` trait method returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
+This method will be triggered if the `is[METHOD]Valid` method returns to `false`. This should return an HTTP response with an HTTP code between `4xx` to `5xx`:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\ErrorResponse;
-use Rougin\Dexterity\Route\WithIndexMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithIndexMethod;
-
     // ...
 
     /**
@@ -479,18 +473,16 @@ class Users
 
 **`set[METHOD]Data`**
 
-This is the main trait method that requires to write its logic based on `[METHOD]`:
+This is the main method that requires to write its logic based on `[METHOD]`:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithIndexMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithIndexMethod;
-
     // ...
 
     /**
@@ -509,26 +501,24 @@ class Users
 }
 ```
 
-Using this kind of approach improves the code structure of HTTP routes as it only requires to write the logic for each `Route` trait being used (e.g., `WithIndexMethod`).
+Using this kind of approach improves the code structure of HTTP routes as it only requires to write the logic for each `Route` method that is being used (e.g., `index`).
 
 > [!NOTE]
 > In other PHP frameworks and other guides, `Route` is also known as `Controller`.
 
-### `WithDeleteMethod` trait
+### `delete` method
 
-The `WithDeleteMethod` trait adds a `delete` method in an HTTP route which can be used for deleting a specified item:
+The `delete` method is an HTTP route which can be used for deleting a specified item:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\ErrorResponse;
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithDeleteMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithDeleteMethod;
-
     // ...
 
     /**
@@ -580,21 +570,19 @@ $route = /** ... */;
 $response = $route->delete($id);
 ```
 
-### `WithIndexMethod` trait
+### `index` method
 
-The `WithIndexMethod` trait allows to use the `index` method from an HTTP route. The specified method should return an array of items as its HTTP response:
+The `index` method should return an array of items as its HTTP response:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\ErrorResponse;
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithIndexMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithIndexMethod;
-
     // ...
 
     /**
@@ -649,21 +637,19 @@ $route = /** ... */;
 $response = $route->index($request);
 ```
 
-### `WithShowMethod` trait
+### `show` method
 
-This `Route` trait allows to use the `show` method which returns an HTTP response for the specified item:
+The `show` method returns an HTTP response for the specified item:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\ErrorResponse;
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithShowMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithShowMethod;
-
     // ...
 
     /**
@@ -720,21 +706,19 @@ $route = /** ... */;
 $response = $route->show(99, $request);
 ```
 
-### `WithStoreMethod` trait
+### `store` method
 
-This trait enables the specified HTTP route to use the `store` method. The specified method should be responsible for creating new items to the specified storage:
+The `store` method should be responsible for creating new items to the specified storage:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\ErrorResponse;
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithStoreMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithStoreMethod;
-
     // ...
 
     /**
@@ -789,21 +773,19 @@ $route = /** ... */;
 $response = $route->store($request);
 ```
 
-### `WithUpdateMethod` trait
+### `update` method
 
-The `WithUpdateMethod` trait adds an `update` method to an HTTP route which updates the details of the specified item:
+The `update` method updates the details of a specified item:
 
 ``` php
 namespace Acme\Routes;
 
 use Rougin\Dexterity\Message\ErrorResponse;
 use Rougin\Dexterity\Message\JsonResponse;
-use Rougin\Dexterity\Route\WithUpdateMethod;
+use Rougin\Dexterity\Route;
 
-class Users
+class Users extends Route
 {
-    use WithUpdateMethod;
-
     // ...
 
     /**

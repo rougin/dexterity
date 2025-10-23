@@ -2,25 +2,15 @@
 
 namespace Rougin\Dexterity\Fixture\Routes;
 
-use Rougin\Dexterity\Route\WithDeleteMethod;
-use Rougin\Dexterity\Route\WithIndexMethod;
-use Rougin\Dexterity\Route\WithShowMethod;
-use Rougin\Dexterity\Route\WithStoreMethod;
-use Rougin\Dexterity\Route\WithUpdateMethod;
+use Rougin\Dexterity\Route;
 
 /**
  * @package Dexterity
  *
  * @author Rougin Gutib <rougingutib@gmail.com>
  */
-class Test
+class Test extends Route
 {
-    use WithDeleteMethod;
-    use WithIndexMethod;
-    use WithShowMethod;
-    use WithStoreMethod;
-    use WithUpdateMethod;
-
     /**
      * @var boolean
      */
