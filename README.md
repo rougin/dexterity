@@ -466,7 +466,7 @@ class Users extends Route
      */
     protected function invalidIndex()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 }
 ```
@@ -528,7 +528,7 @@ class Users extends Route
      */
     protected function invalidDelete()
     {
-        return new ErrorResponse(HttpResponse::NOT_FOUND);
+        return new ErrorResponse(404);
     }
 
     /**
@@ -592,7 +592,7 @@ class Users extends Route
      */
     protected function invalidIndex()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**
@@ -659,7 +659,7 @@ class Users extends Route
      */
     protected function invalidShow()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**
@@ -728,7 +728,7 @@ class Users extends Route
      */
     protected function invalidStore()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**
@@ -795,7 +795,7 @@ class Users extends Route
      */
     protected function invalidUpdate()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**

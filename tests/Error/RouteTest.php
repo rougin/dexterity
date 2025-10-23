@@ -3,7 +3,6 @@
 namespace Rougin\Dexterity\Error;
 
 use Rougin\Dexterity\Fixture\Routes\Test;
-use Rougin\Dexterity\Message\HttpResponse;
 use Rougin\Dexterity\Testcase;
 
 /**
@@ -51,7 +50,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->delete(1, $request);
 
-        $expected = HttpResponse::NOT_FOUND;
+        $expected = 404;
 
         $actual = $response->getStatusCode();
 
@@ -83,7 +82,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->index($request);
 
-        $expected = HttpResponse::UNPROCESSABLE;
+        $expected = 422;
 
         $actual = $response->getStatusCode();
 
@@ -115,7 +114,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->show(1, $request);
 
-        $expected = HttpResponse::NOT_FOUND;
+        $expected = 404;
 
         $actual = $response->getStatusCode();
 
@@ -147,7 +146,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->store($request);
 
-        $expected = HttpResponse::UNPROCESSABLE;
+        $expected = 422;
 
         $actual = $response->getStatusCode();
 
@@ -179,7 +178,7 @@ class RouteTest extends Testcase
 
         $response = $this->route->update(1, $request);
 
-        $expected = HttpResponse::UNPROCESSABLE;
+        $expected = 422;
 
         $actual = $response->getStatusCode();
 

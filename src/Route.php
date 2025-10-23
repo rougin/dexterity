@@ -4,7 +4,6 @@ namespace Rougin\Dexterity;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Rougin\Dexterity\Message\ErrorResponse;
-use Rougin\Dexterity\Message\HttpResponse;
 
 /**
  * @package Dexterity
@@ -120,7 +119,7 @@ class Route
      */
     protected function invalidDelete()
     {
-        return new ErrorResponse(HttpResponse::NOT_FOUND);
+        return new ErrorResponse(404);
     }
 
     /**
@@ -130,7 +129,7 @@ class Route
      */
     protected function invalidIndex()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**
@@ -140,7 +139,7 @@ class Route
      */
     protected function invalidShow()
     {
-        return new ErrorResponse(HttpResponse::NOT_FOUND);
+        return new ErrorResponse(404);
     }
 
     /**
@@ -150,7 +149,7 @@ class Route
      */
     protected function invalidStore()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**
@@ -160,7 +159,7 @@ class Route
      */
     protected function invalidUpdate()
     {
-        return new ErrorResponse(HttpResponse::UNPROCESSABLE);
+        return new ErrorResponse(422);
     }
 
     /**
