@@ -14,12 +14,9 @@ final class CreateRolesTable extends AbstractMigration
      */
     public function change()
     {
-        $properties = array('id' => false, 'primary_key' => array('id'));
-
-        $table = $this->table('roles', $properties);
+        $table = $this->table('roles');
 
         $table
-            ->addColumn('id', 'integer', array('limit' => 10, 'identity' => true))
             ->addColumn('type', 'integer', array('limit' => 1))
             ->addColumn('slug', 'string', array('limit' => 100))
             ->addColumn('name', 'string', array('limit' => 100))

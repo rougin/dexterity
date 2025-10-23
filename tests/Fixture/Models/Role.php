@@ -28,23 +28,19 @@ class Role extends Model
     /**
      * @var array<string, string>
      */
-    protected $casts =
-    [
+    protected $casts = array(
+
         'type' => 'integer',
-    ];
+    );
 
     /**
      * @var string[]
      */
-    protected $fillable =
-    [
+    protected $fillable = array(
+
         'name',
         'slug',
         'type',
-    ];
 
-    /**
-     * @var string
-     */
-    protected $table = 'roles';
+    );
 }

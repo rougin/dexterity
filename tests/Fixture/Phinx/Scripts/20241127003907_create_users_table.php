@@ -14,12 +14,9 @@ final class CreateUsersTable extends AbstractMigration
      */
     public function change()
     {
-        $properties = array('id' => false, 'primary_key' => array('id'));
-
-        $table = $this->table('users', $properties);
+        $table = $this->table('users');
 
         $table
-            ->addColumn('id', 'integer', array('limit' => 10, 'identity' => true))
             ->addColumn('name', 'string', array('limit' => 100))
             ->addColumn('email', 'string', array('limit' => 100))
             ->addColumn('created_at', 'datetime')

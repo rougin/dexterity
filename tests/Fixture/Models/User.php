@@ -23,16 +23,12 @@ class User extends Model
     /**
      * @var string[]
      */
-    protected $fillable =
-    [
+    protected $fillable = array(
+
         'email',
         'name',
-    ];
 
-    /**
-     * @var string
-     */
-    protected $table = 'users';
+    );
 
     /**
      * @return array<string, mixed>

@@ -59,13 +59,13 @@ class Testcase extends Legacy
     {
         $root = __DIR__ . '/Fixture';
 
-        $config = array('driver' => 'sqlite');
+        $data = array('driver' => 'sqlite');
         $path = $root . '/Storage/dxtr.s3db';
-        $config['database'] = (string) $path;
+        $data['database'] = $path;
 
         $capsule = new Manager;
 
-        $capsule->addConnection($config);
+        $capsule->addConnection($data);
 
         $capsule->setAsGlobal();
 

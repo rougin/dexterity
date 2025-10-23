@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [ '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
+        php-versions: [ '5.3', '5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
 
     name: Run Unit Test on PHP ${{ matrix.php-versions }}
 
@@ -31,62 +31,10 @@ jobs:
       run: php -v
 
     - name: Validate composer.json and composer.lock
-      run: composer validate --strict
+      run: composer validate
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-plugins
-
-    - name: Install Composer packages for PHP 5.4
-      if: ${{ matrix.php-versions == '5.4' }}
-      run: composer require illuminate/database:"~4.1|~5.0" --no-plugins --dev
-
-    - name: Install Composer packages for PHP 5.5
-      if: ${{ matrix.php-versions == '5.5' }}
-      run: composer require illuminate/database:"~4.1|~5.0" --no-plugins --dev
-
-    - name: Install Composer packages for PHP 5.6
-      if: ${{ matrix.php-versions == '5.6' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 7.0
-      if: ${{ matrix.php-versions == '7.0' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 7.1
-      if: ${{ matrix.php-versions == '7.1' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 7.2
-      if: ${{ matrix.php-versions == '7.2' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 7.3
-      if: ${{ matrix.php-versions == '7.3' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 7.4
-      if: ${{ matrix.php-versions == '7.4' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 8.0
-      if: ${{ matrix.php-versions == '8.0' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 8.1
-      if: ${{ matrix.php-versions == '8.1' }}
-      run: composer require illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 8.2
-      if: ${{ matrix.php-versions == '8.2' }}
-      run: composer require laravel/serializable-closure illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 8.3
-      if: ${{ matrix.php-versions == '8.3' }}
-      run: composer require laravel/serializable-closure illuminate/database --no-plugins --dev
-
-    - name: Install Composer packages for PHP 8.4
-      if: ${{ matrix.php-versions == '8.4' }}
-      run: composer require laravel/serializable-closure illuminate/database --no-plugins --dev
 
     - name: Run test suite
       run: vendor/bin/phpunit --coverage-clover=coverage.clover --testdox
