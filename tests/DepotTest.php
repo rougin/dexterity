@@ -43,11 +43,11 @@ class DepotTest extends Testcase
         /** @var \Rougin\Dexterity\Fixture\Models\User */
         $result = $this->depot->create($payload);
 
-        $expected = $payload['name'];
+        $expect = $payload['name'];
 
         $actual = $result->name;
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
 
         return $result->id;
     }
@@ -71,7 +71,7 @@ class DepotTest extends Testcase
     {
         $depot = new RoleDepot(new Role);
 
-        $expected = array();
+        $expect = array();
 
         // Create sample roles -----------------
         $row = array('name' => 'Administrator');
@@ -82,13 +82,13 @@ class DepotTest extends Testcase
         $row = array('name' => 'Common User');
         $row['type'] = Role::TYPE_USER;
         $row['slug'] = 'common-user';
-        $expected[] = $row;
+        $expect[] = $row;
         $depot->create($row);
 
         $row = array('name' => 'Default User');
         $row['type'] = Role::TYPE_USER;
         $row['slug'] = 'default-user';
-        $expected[] = $row;
+        $expect[] = $row;
         $depot->create($row);
         // -------------------------------------
 
@@ -101,7 +101,7 @@ class DepotTest extends Testcase
 
         $actual = $depot->get(1, 5)->items();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
     }
 
     /**
@@ -109,7 +109,7 @@ class DepotTest extends Testcase
      */
     public function test_items_by_offset()
     {
-        $expected = 'Dexterity';
+        $expect = 'Dexterity';
 
         $depot = new ResuDepot(new User);
 
@@ -120,7 +120,7 @@ class DepotTest extends Testcase
 
         $actual = $items[0]['name'];
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
     }
 
     /**
@@ -139,11 +139,11 @@ class DepotTest extends Testcase
         /** @var array<string, mixed> */
         $result = $this->depot->find($id);
 
-        $expected = $payload['name'];
+        $expect = $payload['name'];
 
         $actual = $result['name'];
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
 
         return $id;
     }

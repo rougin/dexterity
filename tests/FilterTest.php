@@ -37,11 +37,11 @@ class FilterTest extends Testcase
      */
     public function test_as_integer()
     {
-        $expected = Role::TYPE_USER;
+        $expect = Role::TYPE_USER;
 
         $actual = $this->filter->getAsInt('type');
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
     }
 
     /**
@@ -59,11 +59,11 @@ class FilterTest extends Testcase
      */
     public function test_as_string()
     {
-        $expected = 'user';
+        $expect = 'user';
 
         $actual = $this->filter->getAsString('name');
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
     }
 
     /**

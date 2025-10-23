@@ -57,11 +57,18 @@ class RouteTest extends Testcase
 
         $response = $this->route->index($request);
 
-        $expected = '{"pages":1,"limit":10,"total":5,"items":[{"id":1,"name":"Slytherin","email":"sltr@roug.in"},{"id":2,"name":"Rougin Gutib","email":"me@roug.in"},{"id":3,"name":"Authsum","email":"atsm@roug.in"},{"id":4,"name":"Dexterity","email":"dxtr@roug.in"},{"id":5,"name":"Combustor","email":"cbtr@roug.in"}]}';
+        $expect = '{"pages":1,"limit":10,"total":5,"items":[{"id":1,"name":"Slytherin","email":"sltr@roug.in"},{"id":2,"name":"Rougin Gutib","email":"me@roug.in"},{"id":3,"name":"Authsum","email":"atsm@roug.in"},{"id":4,"name":"Dexterity","email":"dxtr@roug.in"},{"id":5,"name":"Combustor","email":"cbtr@roug.in"}]}';
 
         $actual = $response->getBody()->__toString();
 
-        $this->assertEquals($expected, $actual);
+        // PHP 5.3, 5.4 - Due to "NULL BYTES" issue. ---
+        // @link https://stackoverflow.com/a/8559016 ---
+        $expect = serialize($expect);
+
+        $actual = serialize($actual);
+        // ---------------------------------------------
+
+        $this->assertEquals($expect, $actual);
     }
 
     /**
@@ -75,11 +82,11 @@ class RouteTest extends Testcase
 
         $response = $this->route->show(4, $request);
 
-        $expected = '{"id":4,"name":"Dexterity","email":"dxtr@roug.in"}';
+        $expect = '{"id":4,"name":"Dexterity","email":"dxtr@roug.in"}';
 
         $actual = $response->getBody()->__toString();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
     }
 
     /**
@@ -96,11 +103,11 @@ class RouteTest extends Testcase
 
         $response = $this->route->store($request);
 
-        $expected = 201;
+        $expect = 201;
 
         $actual = $response->getStatusCode();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
 
         $id = $response->getBody()->__toString();
 
@@ -125,11 +132,11 @@ class RouteTest extends Testcase
 
         $response = $this->route->show($id, $request);
 
-        $expected = '{"id":' . $id . ',"name":"Olleh","email":"hello@roug.in"}';
+        $expect = '{"id":' . $id . ',"name":"Olleh","email":"hello@roug.in"}';
 
         $actual = $response->getBody()->__toString();
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
 
         return $id;
     }
