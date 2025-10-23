@@ -3,7 +3,6 @@
 namespace Rougin\Dexterity\Fixture\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer $id
@@ -19,8 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Role extends Model
 {
-    use SoftDeletes;
-
     const TYPE_ADMIN = 0;
 
     const TYPE_USER = 1;
