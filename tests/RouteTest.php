@@ -61,13 +61,6 @@ class RouteTest extends Testcase
 
         $actual = $response->getBody()->__toString();
 
-        // PHP 5.3, 5.4 - Due to "NULL BYTES" issue. ---
-        // @link https://stackoverflow.com/a/8559016 ---
-        $expect = serialize($expect);
-
-        $actual = serialize($actual);
-        // ---------------------------------------------
-
         $this->assertEquals($expect, $actual);
     }
 

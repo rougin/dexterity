@@ -18,6 +18,15 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     /**
+     * @var array<string, string>
+     */
+    protected $casts = array(
+
+        'id' => 'integer',
+
+    );
+
+    /**
      * @var string[]
      */
     protected $fillable = array(

@@ -27,6 +27,7 @@ class Role extends Model
      */
     protected $casts = array(
 
+        'id' => 'integer',
         'type' => 'integer',
     );
 
