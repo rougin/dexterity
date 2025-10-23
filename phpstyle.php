@@ -67,7 +67,7 @@ $rules['align_multiline_comment'] = true;
 
 $finder = new \PhpCsFixer\Finder;
 
-$finder->in((array) $paths);
+$finder->in($paths);
 
 $config = new \PhpCsFixer\Config;
 
